@@ -105,6 +105,42 @@
     });
   }
 
+  /* Modales "études de cas" */
+  let lastFocused = null;
+  function openModal(id) {
+    const m = document.getElementById(id);
+    if (!m) return;
+    lastFocused = document.activeElement;
+    m.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    const closeBtn = m.querySelector('.modal-close');
+    if (closeBtn) closeBtn.focus();
+  }
+  function closeModal(m) {
+    m.classList.remove('open');
+    document.body.style.overflow = '';
+    const sc = m.querySelector('.modal-scroll');
+    if (sc) sc.scrollTop = 0;
+    if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+  }
+  document.querySelectorAll('[data-modal]').forEach(function (trigger) {
+    trigger.addEventListener('click', function () { openModal(trigger.dataset.modal); });
+    trigger.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(trigger.dataset.modal); }
+    });
+  });
+  document.querySelectorAll('.modal-overlay').forEach(function (m) {
+    m.addEventListener('click', function (e) { if (e.target === m) closeModal(m); });
+    const c = m.querySelector('.modal-close');
+    if (c) c.addEventListener('click', function () { closeModal(m); });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      const open = document.querySelector('.modal-overlay.open');
+      if (open) closeModal(open);
+    }
+  });
+
   /* Year */
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
