@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIPA Tech Solutions — Création de sites web au Cameroun</title>
+  <meta name="description" content="SIPA Tech Solutions, agence camerounaise de création de sites internet sur-mesure. Design haut de gamme, performance et référencement pour entreprises au Cameroun et à l'international." />
+  <meta name="theme-color" content="#0d2438" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="SIPA Tech Solutions — Agence web camerounaise" />
+  <meta property="og:description" content="Des sites internet sur-mesure au design haut de gamme pour les entreprises camerounaises et étrangères." />
+  <meta property="og:image" content="assets/logo.svg" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/mark.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Progress bar -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Ambient background -->
+  <div class="ambient" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="grid-overlay"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header" id="header">
+    <div class="container header-inner">
+      <a href="#accueil" class="brand" aria-label="SIPA Tech Solutions - accueil">
+        <span class="brand-mark" aria-hidden="true">
+          <img src="assets/mark.svg" alt="" width="42" height="42" />
+        </span>
+        <span class="brand-text">
+          <span class="brand-name">SIPA</span>
+          <span class="brand-sub">TECH SOLUTIONS</span>
+        </span>
+      </a>
+
+      <nav class="nav" id="nav" aria-label="Navigation principale">
+        <a href="#services">Services</a>
+        <a href="#methode">Méthode</a>
+        <a href="#realisations">Réalisations</a>
+        <a href="#apropos">Agence</a>
+        <a href="#tarifs">Tarifs</a>
+        <a href="#contact" class="nav-cta">Démarrer un projet</a>
+      </nav>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="accueil">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <span class="eyebrow reveal">Agence web camerounaise · 🇨🇲 Basée au Cameroun</span>
+          <h1 class="reveal">
+            Des sites internet <span class="grad">d'exception</span> pour les entreprises ambitieuses.
+          </h1>
+          <p class="hero-lead reveal">
+            SIPA Tech Solutions conçoit des sites au design haut de gamme, rapides et pensés
+            pour convertir. Un rendu digne des meilleures agences européennes, façonné ici, au Cameroun.
+          </p>
+          <div class="hero-actions reveal">
+            <a href="#contact" class="btn btn-primary">Lancer mon projet</a>
+            <a href="#realisations" class="btn btn-ghost">Voir le savoir-faire</a>
+          </div>
+          <div class="hero-stats reveal">
+            <div class="stat"><span class="stat-num" data-count="100" data-suffix="%">0</span><span class="stat-label">Sur-mesure</span></div>
+            <div class="stat"><span class="stat-num" data-count="98" data-suffix="+">0</span><span class="stat-label">Score performance</span></div>
+            <div class="stat"><span class="stat-num" data-count="24" data-suffix="/7">0</span><span class="stat-label">Support dédié</span></div>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal">
+          <div class="logo-stage">
+            <div class="logo-glow"></div>
+            <img src="assets/logo.svg" alt="Logo SIPA Tech Solutions" class="hero-logo" />
+            <div class="ring ring-a"></div>
+            <div class="ring ring-b"></div>
+            <span class="chip chip-1">Design</span>
+            <span class="chip chip-2">Performance</span>
+            <span class="chip chip-3">SEO</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+          <span>Sites vitrines</span><span>·</span><span>E-commerce</span><span>·</span><span>Applications web</span><span>·</span><span>Identité de marque</span><span>·</span><span>Référencement SEO</span><span>·</span><span>Maintenance</span><span>·</span>
+          <span>Sites vitrines</span><span>·</span><span>E-commerce</span><span>·</span><span>Applications web</span><span>·</span><span>Identité de marque</span><span>·</span><span>Référencement SEO</span><span>·</span><span>Maintenance</span><span>·</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="kicker">Nos services</span>
+          <h2>Tout ce qu'il faut pour rayonner en ligne</h2>
+          <p>De la première idée au lancement, nous couvrons chaque étape avec le même souci du détail.</p>
+        </div>
+
+        <div class="cards">
+          <article class="card reveal">
+            <div class="card-icon">🎨</div>
+            <h3>Sites vitrines premium</h3>
+            <p>Des sites élégants qui racontent votre histoire et inspirent confiance dès la première seconde.</p>
+          </article>
+          <article class="card reveal">
+            <div class="card-icon">🛒</div>
+            <h3>Boutiques e-commerce</h3>
+            <p>Vendez en ligne avec des parcours d'achat fluides, sécurisés et optimisés pour la conversion.</p>
+          </article>
+          <article class="card reveal">
+            <div class="card-icon">⚙️</div>
+            <h3>Applications web</h3>
+            <p>Des plateformes sur-mesure, réservations, espaces clients et outils métiers taillés pour vous.</p>
+          </article>
+          <article class="card reveal">
+            <div class="card-icon">🚀</div>
+            <h3>Référencement SEO</h3>
+            <p>Soyez trouvé sur Google. Structure technique, contenus et vitesse pensés pour le classement.</p>
+          </article>
+          <article class="card reveal">
+            <div class="card-icon">✦</div>
+            <h3>Identité de marque</h3>
+            <p>Logo, couleurs, typographie : une image cohérente et mémorable sur tous vos supports.</p>
+          </article>
+          <article class="card reveal">
+            <div class="card-icon">🛡️</div>
+            <h3>Maintenance & support</h3>
+            <p>Mises à jour, sécurité et évolutions continues. Votre site reste rapide et à jour.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- METHODE -->
+    <section class="section section-alt" id="methode">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="kicker">Notre méthode</span>
+          <h2>Un process clair, un résultat maîtrisé</h2>
+          <p>Quatre étapes pour transformer votre vision en un site qui performe.</p>
+        </div>
+
+        <div class="steps">
+          <div class="step reveal">
+            <div class="step-num">01</div>
+            <h3>Découverte</h3>
+            <p>Nous écoutons vos objectifs, votre marché et vos clients pour poser des bases solides.</p>
+          </div>
+          <div class="step reveal">
+            <div class="step-num">02</div>
+            <h3>Design</h3>
+            <p>Maquettes soignées et validées ensemble avant la moindre ligne de code.</p>
+          </div>
+          <div class="step reveal">
+            <div class="step-num">03</div>
+            <h3>Développement</h3>
+            <p>Un site rapide, responsive et sécurisé, construit selon les standards les plus élevés.</p>
+          </div>
+          <div class="step reveal">
+            <div class="step-num">04</div>
+            <h3>Lancement & suivi</h3>
+            <p>Mise en ligne, formation et accompagnement pour faire grandir votre présence.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REALISATIONS -->
+    <section class="section" id="realisations">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="kicker">Savoir-faire</span>
+          <h2>Un rendu à la hauteur des meilleures agences</h2>
+          <p>Aperçu du niveau de finition que nous appliquons à chaque projet.</p>
+        </div>
+
+        <div class="portfolio">
+          <article class="folio reveal">
+            <div class="folio-frame folio-1">
+              <span class="folio-tag">Vitrine · Corporate</span>
+            </div>
+            <h3>Cabinet & services professionnels</h3>
+            <p>Une présence élégante et crédible qui rassure et génère des prises de contact.</p>
+          </article>
+          <article class="folio reveal">
+            <div class="folio-frame folio-2">
+              <span class="folio-tag">E-commerce · Retail</span>
+            </div>
+            <h3>Boutique en ligne moderne</h3>
+            <p>Catalogue immersif, paiement fluide et expérience mobile impeccable.</p>
+          </article>
+          <article class="folio reveal">
+            <div class="folio-frame folio-3">
+              <span class="folio-tag">Web app · Réservation</span>
+            </div>
+            <h3>Plateforme de réservation</h3>
+            <p>Un outil sur-mesure qui automatise et simplifie votre activité au quotidien.</p>
+          </article>
+        </div>
+        <p class="folio-note reveal">Votre projet sera notre prochaine référence. <a href="#contact">Parlons-en →</a></p>
+      </div>
+    </section>
+
+    <!-- APROPOS -->
+    <section class="section section-alt" id="apropos">
+      <div class="container about-grid">
+        <div class="about-copy reveal">
+          <span class="kicker">L'agence</span>
+          <h2>Fiers d'être Camerounais, taillés pour l'international</h2>
+          <p>
+            SIPA Tech Solutions est née d'une conviction : les entreprises camerounaises méritent
+            des sites internet aussi beaux et performants que les plus belles réalisations européennes.
+          </p>
+          <p>
+            Nous accompagnons aujourd'hui les entreprises du Cameroun — et demain celles du monde entier —
+            avec exigence, transparence et un vrai souci du détail. Chaque projet est traité comme une vitrine
+            de notre savoir-faire.
+          </p>
+          <ul class="checklist">
+            <li>Design haut de gamme et animations soignées</li>
+            <li>Sites rapides, responsives et optimisés SEO</li>
+            <li>Interlocuteur unique, réactif et à votre écoute</li>
+            <li>Accompagnement de A à Z, sans jargon inutile</li>
+          </ul>
+          <a href="#contact" class="btn btn-primary">Travailler avec nous</a>
+        </div>
+        <div class="about-visual reveal">
+          <div class="values">
+            <div class="value"><span class="value-ico">◆</span><div><h4>Excellence</h4><p>Le détail qui fait la différence.</p></div></div>
+            <div class="value"><span class="value-ico">⚡</span><div><h4>Performance</h4><p>Vitesse et fiabilité avant tout.</p></div></div>
+            <div class="value"><span class="value-ico">🤝</span><div><h4>Proximité</h4><p>Un partenaire, pas un prestataire.</p></div></div>
+            <div class="value"><span class="value-ico">🌍</span><div><h4>Ambition</h4><p>Local aujourd'hui, global demain.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TARIFS -->
+    <section class="section" id="tarifs">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="kicker">Formules</span>
+          <h2>Des offres claires, un accompagnement complet</h2>
+          <p>Chaque projet est unique : ces formules donnent un point de départ. Un devis précis vous est remis après échange.</p>
+        </div>
+
+        <div class="pricing">
+          <article class="plan reveal">
+            <h3>Essentiel</h3>
+            <p class="plan-desc">Idéal pour lancer une présence pro et crédible.</p>
+            <div class="plan-price">Site vitrine <span>sur devis</span></div>
+            <ul>
+              <li>Jusqu'à 5 pages sur-mesure</li>
+              <li>Design responsive premium</li>
+              <li>Formulaire de contact & WhatsApp</li>
+              <li>Optimisation SEO de base</li>
+            </ul>
+            <a href="#contact" class="btn btn-ghost">Demander un devis</a>
+          </article>
+
+          <article class="plan plan-featured reveal">
+            <span class="plan-badge">Le plus choisi</span>
+            <h3>Business</h3>
+            <p class="plan-desc">Pour une entreprise qui veut se démarquer vraiment.</p>
+            <div class="plan-price">Site complet <span>sur devis</span></div>
+            <ul>
+              <li>Site multi-pages avancé</li>
+              <li>Animations & interactions soignées</li>
+              <li>Blog / actualités intégré</li>
+              <li>SEO approfondi & performance</li>
+              <li>Formation à la prise en main</li>
+            </ul>
+            <a href="#contact" class="btn btn-primary">Demander un devis</a>
+          </article>
+
+          <article class="plan reveal">
+            <h3>Sur-mesure</h3>
+            <p class="plan-desc">E-commerce, application ou projet spécifique.</p>
+            <div class="plan-price">Projet dédié <span>sur devis</span></div>
+            <ul>
+              <li>E-commerce & paiements</li>
+              <li>Espaces clients & réservations</li>
+              <li>Fonctionnalités sur-mesure</li>
+              <li>Maintenance & évolutions</li>
+            </ul>
+            <a href="#contact" class="btn btn-ghost">Demander un devis</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section section-contact" id="contact">
+      <div class="container contact-grid">
+        <div class="contact-copy reveal">
+          <span class="kicker">Contact</span>
+          <h2>Donnons vie à votre projet</h2>
+          <p>Parlez-nous de votre entreprise et de vos objectifs. Réponse rapide, garantie.</p>
+
+          <div class="contact-methods">
+            <a class="cmethod" href="https://wa.me/237655282559?text=Bonjour%20SIPA%20Tech%20Solutions%2C%20je%20souhaite%20un%20site%20web." target="_blank" rel="noopener">
+              <span class="cmethod-ico">💬</span>
+              <span><strong>WhatsApp</strong><br>+237 655 282 559</span>
+            </a>
+            <a class="cmethod" href="mailto:sipatechsolutions@gmail.com">
+              <span class="cmethod-ico">✉️</span>
+              <span><strong>Email</strong><br>sipatechsolutions@gmail.com</span>
+            </a>
+            <div class="cmethod">
+              <span class="cmethod-ico">📍</span>
+              <span><strong>Localisation</strong><br>Cameroun · Projets partout dans le monde</span>
+            </div>
+          </div>
+        </div>
+
+        <form class="contact-form reveal" id="contactForm">
+          <div class="field">
+            <label for="name">Nom complet</label>
+            <input type="text" id="name" name="name" required placeholder="Votre nom" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required placeholder="vous@exemple.com" />
+          </div>
+          <div class="field">
+            <label for="type">Type de projet</label>
+            <select id="type" name="type">
+              <option>Site vitrine</option>
+              <option>Boutique e-commerce</option>
+              <option>Application web</option>
+              <option>Refonte de site existant</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="message">Votre message</label>
+            <textarea id="message" name="message" rows="4" required placeholder="Décrivez votre projet en quelques mots..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Envoyer ma demande</button>
+          <p class="form-hint">Vous pouvez aussi nous écrire directement sur WhatsApp pour une réponse immédiate.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="assets/logo.svg" alt="SIPA Tech Solutions" class="footer-logo" />
+        <p>Agence web camerounaise. Des sites internet d'exception pour les entreprises ambitieuses.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <a href="#services">Services</a>
+        <a href="#methode">Méthode</a>
+        <a href="#realisations">Réalisations</a>
+        <a href="#tarifs">Tarifs</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="https://wa.me/237655282559" target="_blank" rel="noopener">WhatsApp +237 655 282 559</a>
+        <a href="mailto:sipatechsolutions@gmail.com">sipatechsolutions@gmail.com</a>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <span>© <span id="year"></span> SIPA Tech Solutions. Tous droits réservés.</span>
+      <span>Conçu avec exigence, au Cameroun 🇨🇲</span>
+    </div>
+  </footer>
+
+  <!-- Floating WhatsApp -->
+  <a class="wa-float" href="https://wa.me/237655282559?text=Bonjour%20SIPA%20Tech%20Solutions" target="_blank" rel="noopener" aria-label="Nous contacter sur WhatsApp">
+    <svg viewBox="0 0 32 32" width="28" height="28" fill="currentColor"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.2 1.6 6L4 29l8.2-1.6c1.7.9 3.6 1.4 5.6 1.4h.2c6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-4.9 1 1-4.8-.2-.4C5.5 18 5 16.5 5 15 5 9.5 9.9 5 16 5s11 4.5 11 10-4.9 9.8-11 9.8zm5.6-7.4c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7 0c-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1s0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.6s0-.4 0-.6-.7-1.7-1-2.3c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4s-1 1-1 2.4 1 2.8 1.2 3 2 3.1 4.9 4.3c.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.3-.6-.4z"/></svg>
+  </a>
+
+  <script src="script.js"></script>
+</body>
+</html>

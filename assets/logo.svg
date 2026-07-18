@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 360" role="img" aria-label="SIPA Tech Solutions">
+  <defs>
+    <linearGradient id="sipaBlue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#215a86"/>
+      <stop offset="1" stop-color="#173a56"/>
+    </linearGradient>
+  </defs>
+  <!-- Network diamond -->
+  <g fill="none" stroke="#173a56" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <!-- outer diamond -->
+    <path d="M160 40 L280 160 L160 280 L40 160 Z"/>
+    <!-- inner cross grid -->
+    <path d="M100 100 L220 220"/>
+    <path d="M220 100 L100 220"/>
+    <path d="M160 70 L160 250"/>
+    <path d="M70 160 L250 160"/>
+  </g>
+  <!-- nodes -->
+  <g fill="#3e5c6e">
+    <circle cx="160" cy="40" r="11"/>
+    <circle cx="280" cy="160" r="11"/>
+    <circle cx="160" cy="280" r="11"/>
+    <circle cx="40" cy="160" r="11"/>
+    <circle cx="100" cy="100" r="9"/>
+    <circle cx="220" cy="100" r="9"/>
+    <circle cx="100" cy="220" r="9"/>
+    <circle cx="220" cy="220" r="9"/>
+  </g>
+  <!-- upward growth arrow -->
+  <g fill="none" stroke="url(#sipaBlue)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M96 250 L150 196 L192 232 L246 110"/>
+  </g>
+  <path d="M212 104 L252 100 L248 140 Z" fill="#173a56"/>
+  <!-- Central S -->
+  <text x="160" y="205" font-family="Georgia, 'Times New Roman', serif" font-size="150" font-weight="700" fill="url(#sipaBlue)" text-anchor="middle" stroke="#ffffff" stroke-width="6" paint-order="stroke">S</text>
+  <!-- Wordmark -->
+  <text x="160" y="330" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="72" font-weight="800" letter-spacing="2" fill="#215a86" text-anchor="middle">SIPA</text>
+  <text x="160" y="352" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" font-weight="600" letter-spacing="8" fill="#3e5c6e" text-anchor="middle">TECH SOLUTIONS</text>
+</svg>
