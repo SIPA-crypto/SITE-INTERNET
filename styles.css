@@ -121,7 +121,7 @@ h1, h2, h3, h4 { font-family: var(--display); font-weight: 700; line-height: 1.1
 .hero::before {
   content: ''; position: absolute; inset: 0; z-index: -1;
   background:
-    linear-gradient(180deg, rgba(10,31,48,0.86) 0%, rgba(10,31,48,0.90) 55%, rgba(10,31,48,0.97) 100%),
+    linear-gradient(100deg, rgba(10,31,48,0.80) 0%, rgba(10,31,48,0.55) 50%, rgba(10,31,48,0.38) 100%),
     url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=70');
   background-size: cover; background-position: center;
   background-repeat: no-repeat;
