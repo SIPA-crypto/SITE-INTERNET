@@ -116,7 +116,16 @@ h1, h2, h3, h4 { font-family: var(--display); font-weight: 700; line-height: 1.1
 .btn-block { width: 100%; }
 
 /* ---------- Hero ---------- */
-.hero { position: relative; padding: 168px 0 60px; }
+.hero { position: relative; z-index: 0; padding: 168px 0 60px; overflow: hidden; }
+/* Photo de fond du hero, adoucie par un voile bleu foncé (texte + logo restent lisibles) */
+.hero::before {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(10,31,48,0.86) 0%, rgba(10,31,48,0.90) 55%, rgba(10,31,48,0.97) 100%),
+    url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=70');
+  background-size: cover; background-position: center;
+  background-repeat: no-repeat;
+}
 .hero-inner { display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; }
 
 .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: .82rem; font-weight: 600;
