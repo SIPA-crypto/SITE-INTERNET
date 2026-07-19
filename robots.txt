@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sipa-crypto.github.io/site-internet/sitemap.xml
+Sitemap: https://sipa-crypto.github.io/SITE-INTERNET/sitemap.xml
