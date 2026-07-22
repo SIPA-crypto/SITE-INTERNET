@@ -426,29 +426,32 @@ a.cmethod:hover { transform: translateX(6px); border-color: rgba(43,107,158,0.45
   background-size: cover; background-position: center; background-repeat: no-repeat;
 }
 #services::before {
-  background-image: linear-gradient(160deg, rgba(10,31,48,0.72), rgba(10,31,48,0.52) 50%, rgba(10,31,48,0.60)),
-    url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=70');
+  background-image: linear-gradient(180deg, rgba(9,20,32,0.82), rgba(9,20,32,0.64) 45%, rgba(9,20,32,0.88)),
+    url('assets/sec-services.jpg');
 }
 #methode::before {
-  background-image: linear-gradient(160deg, rgba(13,36,56,0.72), rgba(13,36,56,0.52) 50%, rgba(13,36,56,0.60)),
-    url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1600&q=70');
+  background-image: linear-gradient(180deg, rgba(9,20,32,0.82), rgba(9,20,32,0.64) 45%, rgba(9,20,32,0.88)),
+    url('assets/sec-methode.jpg');
 }
 #realisations::before {
-  background-image: linear-gradient(160deg, rgba(10,31,48,0.72), rgba(10,31,48,0.52) 50%, rgba(10,31,48,0.60)),
-    url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1600&q=70');
+  background-image: linear-gradient(180deg, rgba(9,20,32,0.82), rgba(9,20,32,0.64) 45%, rgba(9,20,32,0.88)),
+    url('assets/sec-realisations.jpg');
 }
 #apropos::before {
-  background-image: linear-gradient(160deg, rgba(13,36,56,0.72), rgba(13,36,56,0.52) 50%, rgba(13,36,56,0.60)),
-    url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1600&q=70');
+  background-image: linear-gradient(180deg, rgba(9,20,32,0.82), rgba(9,20,32,0.64) 45%, rgba(9,20,32,0.88)),
+    url('assets/sec-agence.jpg');
 }
 #tarifs::before {
-  background-image: linear-gradient(160deg, rgba(10,31,48,0.72), rgba(10,31,48,0.52) 50%, rgba(10,31,48,0.60)),
-    url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1600&q=70');
+  background-image: linear-gradient(180deg, rgba(9,20,32,0.82), rgba(9,20,32,0.64) 45%, rgba(9,20,32,0.88)),
+    url('assets/sec-tarifs.jpg');
 }
 #contact::before {
-  background-image: linear-gradient(160deg, rgba(10,31,48,0.72), rgba(10,31,48,0.52) 50%, rgba(10,31,48,0.60)),
-    url('https://images.unsplash.com/photo-1423666639041-f56000c27a9a?auto=format&fit=crop&w=1600&q=70');
+  background-image: linear-gradient(180deg, rgba(9,20,32,0.82), rgba(9,20,32,0.64) 45%, rgba(9,20,32,0.88)),
+    url('assets/sec-contact.jpg');
 }
+/* Titres de section en serif (harmonie avec le hero) */
+.section-head h2, .about-copy h2, .contact-copy h2 { font-family: var(--serif); font-weight: 600; letter-spacing: 0; }
+.kicker { color: var(--gold); }
 
 /* ---------- Hero éditorial (style studio) ---------- */
 :root { --serif: 'Playfair Display', Georgia, 'Times New Roman', serif; }
