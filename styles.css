@@ -449,3 +449,35 @@ a.cmethod:hover { transform: translateX(6px); border-color: rgba(43,107,158,0.45
   background-image: linear-gradient(160deg, rgba(10,31,48,0.72), rgba(10,31,48,0.52) 50%, rgba(10,31,48,0.60)),
     url('https://images.unsplash.com/photo-1423666639041-f56000c27a9a?auto=format&fit=crop&w=1600&q=70');
 }
+
+/* ---------- Hero éditorial (style studio) ---------- */
+:root { --serif: 'Playfair Display', Georgia, 'Times New Roman', serif; }
+.hero-editorial { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+  text-align: center; padding: 120px 24px 70px; overflow: hidden; }
+.hero-editorial::before {
+  background-image:
+    linear-gradient(180deg, rgba(9,18,28,0.55) 0%, rgba(9,18,28,0.42) 45%, rgba(9,18,28,0.78) 100%),
+    radial-gradient(1100px 680px at 50% 52%, rgba(9,18,28,0.10), rgba(9,18,28,0.55) 100%),
+    url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1600&q=75');
+  background-size: cover; background-position: center;
+}
+.hero-ed { display: flex; flex-direction: column; align-items: center; gap: 22px; max-width: 880px; }
+.hero-eyebrow { font-family: var(--font); text-transform: uppercase; letter-spacing: .34em; font-size: .82rem; font-weight: 600; color: #e8dcc7; }
+.hero-title { font-family: var(--serif); font-weight: 600; font-size: clamp(3rem, 8.4vw, 6.4rem); line-height: 1.03;
+  color: #f5ede1; letter-spacing: .5px; text-shadow: 0 12px 44px rgba(0,0,0,.55); margin: 0; }
+.hero-tagline { font-family: var(--font); font-weight: 400; font-size: clamp(1.05rem, 2.3vw, 1.5rem); color: #e7ddcd;
+  letter-spacing: .02em; max-width: 640px; line-height: 1.5; }
+.btn-ed { display: inline-block; margin-top: 12px; padding: 16px 44px; border: 1.5px solid rgba(245,237,225,.75);
+  color: #f5ede1; font-family: var(--font); font-weight: 600; font-size: .98rem; letter-spacing: .04em; border-radius: 3px;
+  transition: background .35s var(--ease), color .35s var(--ease), transform .35s var(--ease); }
+.btn-ed:hover { background: #f5ede1; color: #10202e; transform: translateY(-2px); }
+.scroll-cue { position: absolute; bottom: 30px; left: 50%; width: 26px; height: 42px; border: 2px solid rgba(245,237,225,.6);
+  border-radius: 14px; transform: translateX(-50%); }
+.scroll-cue::before { content: ''; position: absolute; top: 8px; left: 50%; width: 4px; height: 8px; border-radius: 3px;
+  background: rgba(245,237,225,.85); transform: translateX(-50%); animation: scrollDot 1.6s ease-in-out infinite; }
+@keyframes scrollDot { 0%,100% { opacity: .3; transform: translate(-50%, 0); } 50% { opacity: 1; transform: translate(-50%, 12px); } }
+/* Nav plus discrète et élégante sur le hero */
+.nav a { letter-spacing: .02em; }
+@media (max-width: 680px) {
+  .hero-editorial { min-height: 92vh; padding: 110px 20px 60px; }
+}
