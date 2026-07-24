@@ -307,12 +307,13 @@ a.cmethod:hover { transform: translateX(6px); border-color: rgba(43,107,158,0.45
   border-top: 1px solid var(--line); padding: 22px 24px 30px; font-size: .84rem; color: var(--ink-dim); }
 
 /* ---------- Floating WhatsApp ---------- */
-.wa-float { position: fixed; bottom: 24px; right: 24px; z-index: 950; width: 58px; height: 58px; border-radius: 50%;
+.wa-float { position: fixed; bottom: 24px; right: 24px; z-index: 950; width: 54px; height: 54px; border-radius: 50%;
   display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, #25d366, #128c56);
-  box-shadow: 0 14px 34px -8px rgba(37,211,102,0.7); transition: transform .3s var(--ease); }
-.wa-float:hover { transform: scale(1.1) translateY(-3px); }
-.wa-float::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 2px solid #25d366; animation: ripple 2.2s ease-out infinite; }
-@keyframes ripple { 0% { transform: scale(1); opacity: .7; } 100% { transform: scale(1.6); opacity: 0; } }
+  box-shadow: 0 12px 28px -10px rgba(37,211,102,0.6);
+  opacity: 0; visibility: hidden; transform: translateY(14px) scale(.9);
+  transition: opacity .35s var(--ease), transform .35s var(--ease), visibility .35s; }
+.wa-float.show { opacity: 1; visibility: visible; transform: none; }
+.wa-float:hover { transform: scale(1.08) translateY(-2px); }
 
 /* ---------- Reveal animation ---------- */
 .reveal { opacity: 0; transform: translateY(30px); transition: opacity .8s var(--ease), transform .8s var(--ease); }

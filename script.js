@@ -8,13 +8,15 @@
   const menuToggle = document.getElementById('menuToggle');
   const nav = document.getElementById('nav');
   const progress = document.getElementById('scrollProgress');
+  const waFloat = document.querySelector('.wa-float');
 
-  /* Header state + scroll progress */
+  /* Header state + scroll progress + bouton WhatsApp flottant (discret) */
   function onScroll() {
     const y = window.scrollY;
     header.classList.toggle('scrolled', y > 30);
     const h = document.documentElement.scrollHeight - window.innerHeight;
     progress.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
+    if (waFloat) waFloat.classList.toggle('show', y > window.innerHeight * 0.75);
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
