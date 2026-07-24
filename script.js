@@ -92,12 +92,14 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       const name = form.name.value.trim();
+      const phone = form.phone ? form.phone.value.trim() : '';
       const email = form.email.value.trim();
       const type = form.type.value;
       const message = form.message.value.trim();
-      const subject = 'Nouveau projet — ' + type + ' (' + name + ')';
+      const subject = 'Demande de devis — ' + type + ' (' + name + ')';
       const body =
         'Nom: ' + name + '\r\n' +
+        'WhatsApp / Téléphone: ' + phone + '\r\n' +
         'Email: ' + email + '\r\n' +
         'Type de projet: ' + type + '\r\n\r\n' +
         'Message:\r\n' + message;

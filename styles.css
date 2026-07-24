@@ -498,3 +498,6 @@ a.cmethod:hover { transform: translateX(6px); border-color: rgba(43,107,158,0.45
 .hero-reassure b { color:#f5ede1; font-weight:600; }
 .btn-ed-sm { padding:14px 30px; font-size:.92rem; }
 .sec-cta { display:flex; justify-content:center; margin-top:46px; position:relative; z-index:1; }
+
+/* Champ facultatif dans le formulaire */
+.field .opt { color: var(--ink-dim); font-weight: 400; font-size: .82em; }
