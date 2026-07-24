@@ -510,3 +510,29 @@ a.cmethod:hover { transform: translateX(6px); border-color: rgba(43,107,158,0.45
 .fs-again { background: rgba(255,255,255,0.08); border: 1px solid var(--line); color: var(--ink);
   padding: 9px 18px; border-radius: 999px; font-weight: 600; font-family: var(--font); cursor: pointer; transition: background .25s; }
 .fs-again:hover { background: rgba(255,255,255,0.16); }
+
+/* ---------- FAQ (accordéon animé) ---------- */
+.faq { max-width: 840px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+.faq-item { background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
+  transition: border-color .4s var(--ease), background .4s var(--ease), box-shadow .4s var(--ease); }
+.faq-item:hover { border-color: rgba(255,255,255,0.16); }
+.faq-item.open { border-color: rgba(233,184,114,0.55); background: var(--card-2);
+  box-shadow: 0 24px 60px -34px rgba(233,184,114,0.55); }
+.faq-q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 18px;
+  padding: 20px 24px; background: none; border: 0; cursor: pointer; text-align: left;
+  font-family: var(--display); font-weight: 600; font-size: 1.08rem; color: var(--ink);
+  transition: color .3s var(--ease); }
+.faq-q:hover { color: #fff; }
+.faq-item.open .faq-q { color: var(--gold); }
+.faq-ico { position: relative; flex: none; width: 30px; height: 30px; border-radius: 50%;
+  background: rgba(233,184,114,0.12); border: 1px solid rgba(233,184,114,0.35); transition: background .3s, transform .4s var(--ease); }
+.faq-item.open .faq-ico { background: rgba(233,184,114,0.22); transform: rotate(180deg); }
+.faq-ico::before, .faq-ico::after { content: ''; position: absolute; top: 50%; left: 50%; width: 13px; height: 2.5px;
+  background: var(--gold); border-radius: 2px; transform: translate(-50%,-50%); transition: transform .4s var(--ease); }
+.faq-ico::after { transform: translate(-50%,-50%) rotate(90deg); }
+.faq-item.open .faq-ico::after { transform: translate(-50%,-50%) rotate(0deg); }
+.faq-answer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s var(--ease); }
+.faq-item.open .faq-answer { grid-template-rows: 1fr; }
+.faq-answer > div { overflow: hidden; }
+.faq-answer p { padding: 0 24px 22px; color: var(--ink-soft); font-size: 1rem; line-height: 1.65; }
+.faq-answer p b { color: var(--ink); }
