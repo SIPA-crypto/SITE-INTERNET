@@ -89,6 +89,8 @@
   /* Contact form -> mailto */
   const form = document.getElementById('contactForm');
   if (form) {
+    const success = document.getElementById('formSuccess');
+    const fsName = document.getElementById('fsName');
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       const name = form.name.value.trim();
@@ -96,17 +98,31 @@
       const email = form.email.value.trim();
       const type = form.type.value;
       const message = form.message.value.trim();
-      const subject = 'Demande de devis — ' + type + ' (' + name + ')';
-      const body =
-        'Nom: ' + name + '\r\n' +
-        'WhatsApp / Téléphone: ' + phone + '\r\n' +
-        'Email: ' + email + '\r\n' +
-        'Type de projet: ' + type + '\r\n\r\n' +
-        'Message:\r\n' + message;
-      window.location.href =
-        'mailto:sipatechsolutions@gmail.com?subject=' + encodeURIComponent(subject) +
-        '&body=' + encodeURIComponent(body);
+      const lines = [
+        'Bonjour SIPA Tech Solutions, je souhaite un devis :',
+        'Nom : ' + name,
+        'WhatsApp / Tél : ' + phone,
+        (email ? 'Email : ' + email : ''),
+        'Type de projet : ' + type,
+        'Projet : ' + message
+      ].filter(Boolean);
+      const wa = 'https://wa.me/237655282559?text=' + encodeURIComponent(lines.join('\n'));
+      window.open(wa, '_blank');
+      if (fsName) fsName.textContent = name ? name.split(' ')[0] : '';
+      if (success) {
+        success.hidden = false;
+        success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      form.reset();
     });
+    const again = form.querySelector('.fs-again');
+    if (again && success) {
+      again.addEventListener('click', function () {
+        success.hidden = true;
+        const first = form.querySelector('#name');
+        if (first) first.focus();
+      });
+    }
   }
 
   /* Modales "études de cas" */
