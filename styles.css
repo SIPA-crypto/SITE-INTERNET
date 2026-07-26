@@ -140,7 +140,7 @@ h1, h2, h3, h4 { font-family: var(--display); font-weight: 700; line-height: 1.1
   content: ''; position: absolute; inset: 0; z-index: -1;
   background:
     linear-gradient(100deg, rgba(10,31,48,0.80) 0%, rgba(10,31,48,0.55) 50%, rgba(10,31,48,0.38) 100%),
-    url('assets/hero.jpg');
+    url('assets/hero.webp');
   background-size: cover; background-position: center;
   background-repeat: no-repeat;
 }
@@ -446,27 +446,27 @@ a.cmethod:hover { transform: translateX(6px); border-color: rgba(43,107,158,0.45
 }
 #services::before {
   background-image: linear-gradient(180deg, rgba(9,20,32,0.82), rgba(9,20,32,0.64) 45%, rgba(9,20,32,0.88)),
-    url('assets/sec-services.jpg');
+    url('assets/sec-services.webp');
 }
 #methode::before {
   background-image: linear-gradient(180deg, rgba(9,20,32,0.82), rgba(9,20,32,0.64) 45%, rgba(9,20,32,0.88)),
-    url('assets/sec-methode.jpg');
+    url('assets/sec-methode.webp');
 }
 #realisations::before {
   background-image: linear-gradient(180deg, rgba(9,20,32,0.82), rgba(9,20,32,0.64) 45%, rgba(9,20,32,0.88)),
-    url('assets/sec-realisations.jpg');
+    url('assets/sec-realisations.webp');
 }
 #apropos::before {
   background-image: linear-gradient(180deg, rgba(9,20,32,0.82), rgba(9,20,32,0.64) 45%, rgba(9,20,32,0.88)),
-    url('assets/sec-agence.jpg');
+    url('assets/sec-agence.webp');
 }
 #tarifs::before {
   background-image: linear-gradient(180deg, rgba(9,20,32,0.82), rgba(9,20,32,0.64) 45%, rgba(9,20,32,0.88)),
-    url('assets/sec-tarifs.jpg');
+    url('assets/sec-tarifs.webp');
 }
 #contact::before {
   background-image: linear-gradient(180deg, rgba(9,20,32,0.82), rgba(9,20,32,0.64) 45%, rgba(9,20,32,0.88)),
-    url('assets/sec-contact.jpg');
+    url('assets/sec-contact.webp');
 }
 /* Titres de section en serif (harmonie avec le hero) */
 .section-head h2, .about-copy h2, .contact-copy h2 { font-family: var(--serif); font-weight: 600; letter-spacing: 0; }
@@ -480,7 +480,7 @@ a.cmethod:hover { transform: translateX(6px); border-color: rgba(43,107,158,0.45
   background-image:
     linear-gradient(180deg, rgba(9,18,28,0.55) 0%, rgba(9,18,28,0.42) 45%, rgba(9,18,28,0.78) 100%),
     radial-gradient(1100px 680px at 50% 52%, rgba(9,18,28,0.10), rgba(9,18,28,0.55) 100%),
-    url('assets/hero.jpg');
+    url('assets/hero.webp');
   background-size: cover; background-position: center;
 }
 .hero-ed { display: flex; flex-direction: column; align-items: center; gap: 22px; max-width: 880px; }
