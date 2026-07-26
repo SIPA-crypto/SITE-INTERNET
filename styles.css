@@ -2,6 +2,24 @@
    SIPA Tech Solutions — Premium stylesheet
    ===================================================================== */
 
+/* ---------- Polices auto-hébergées (aucune dépendance externe) ---------- */
+@font-face {
+  font-family: 'Manrope'; font-style: normal; font-weight: 400 700;
+  font-display: swap; src: url('assets/fonts/manrope.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Sora'; font-style: normal; font-weight: 400 800;
+  font-display: swap; src: url('assets/fonts/sora.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Playfair Display'; font-style: normal; font-weight: 400 800;
+  font-display: swap; src: url('assets/fonts/playfair.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Playfair Display'; font-style: italic; font-weight: 400 800;
+  font-display: swap; src: url('assets/fonts/playfair-italic.woff2') format('woff2');
+}
+
 :root {
   --navy-900: #0a1f30;
   --navy-800: #0d2438;
@@ -122,7 +140,7 @@ h1, h2, h3, h4 { font-family: var(--display); font-weight: 700; line-height: 1.1
   content: ''; position: absolute; inset: 0; z-index: -1;
   background:
     linear-gradient(100deg, rgba(10,31,48,0.80) 0%, rgba(10,31,48,0.55) 50%, rgba(10,31,48,0.38) 100%),
-    url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=70');
+    url('assets/hero.jpg');
   background-size: cover; background-position: center;
   background-repeat: no-repeat;
 }
@@ -462,7 +480,7 @@ a.cmethod:hover { transform: translateX(6px); border-color: rgba(43,107,158,0.45
   background-image:
     linear-gradient(180deg, rgba(9,18,28,0.55) 0%, rgba(9,18,28,0.42) 45%, rgba(9,18,28,0.78) 100%),
     radial-gradient(1100px 680px at 50% 52%, rgba(9,18,28,0.10), rgba(9,18,28,0.55) 100%),
-    url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1600&q=75');
+    url('assets/hero.jpg');
   background-size: cover; background-position: center;
 }
 .hero-ed { display: flex; flex-direction: column; align-items: center; gap: 22px; max-width: 880px; }
