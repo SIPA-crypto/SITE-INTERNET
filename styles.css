@@ -101,10 +101,12 @@ h1, h2, h3, h4 { font-family: var(--display); font-weight: 700; line-height: 1.1
 }
 .header-inner { display: flex; align-items: center; justify-content: space-between; }
 
-.brand { display: flex; align-items: center; gap: 12px; }
-.brand-mark { color: var(--blue-400); display: grid; place-items: center;
-  filter: drop-shadow(0 4px 12px rgba(43,107,158,0.4)); transition: transform .4s var(--ease); }
-.brand:hover .brand-mark { transform: rotate(-8deg) scale(1.05); }
+.brand { display: flex; align-items: center; gap: 11px; }
+.brand-mark { display: grid; place-items: center;
+  filter: drop-shadow(0 3px 10px rgba(43,107,158,0.55)); transition: transform .4s var(--ease); }
+.brand-mark img { height: 46px; width: auto; display: block; }
+.site-header.scrolled .brand-mark img { height: 40px; transition: height .35s var(--ease); }
+.brand:hover .brand-mark { transform: scale(1.06); }
 .brand-text { display: flex; flex-direction: column; line-height: 1; }
 .brand-name { font-family: var(--display); font-weight: 800; font-size: 1.15rem; letter-spacing: .04em; color: #fff; }
 .brand-sub { font-size: .58rem; letter-spacing: .34em; color: var(--ink-dim); font-weight: 600; margin-top: 3px; }
@@ -316,7 +318,7 @@ a.cmethod:hover { transform: translateX(6px); border-color: rgba(43,107,158,0.45
 /* ---------- Footer ---------- */
 .site-footer { border-top: 1px solid var(--line); background: rgba(6,20,32,0.6); padding-top: 56px; }
 .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; padding-bottom: 40px; }
-.footer-logo { width: 170px; border-radius: 10px; margin-bottom: 16px; }
+.footer-logo { width: 190px; margin-bottom: 16px; filter: drop-shadow(0 6px 18px rgba(43,107,158,0.35)); }
 .footer-brand p { color: var(--ink-soft); font-size: .94rem; max-width: 320px; }
 .footer-col h4 { font-size: .95rem; margin-bottom: 14px; color: #fff; }
 .footer-col a { display: block; color: var(--ink-soft); font-size: .92rem; padding: 5px 0; transition: color .25s; }
