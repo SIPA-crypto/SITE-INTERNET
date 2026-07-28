@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>La Ferme Renaissance — Réinsertion, espoir et nouveau départ</title>
+<meta name="description" content="Un lieu où les femmes et les hommes ayant purgé leur peine retrouvent espoir, logement et compétences pratiques pour reconstruire leur vie après la libération." />
+<!-- Open Graph / cartes sociales -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="La Ferme Renaissance — Réinsertion, espoir et nouveau départ" />
+<meta property="og:description" content="Logement, formation et communauté pour reconstruire une vie après la prison. Découvrez notre mission, nos programmes et nos témoignages." />
+<meta property="og:image" content="og-image.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="theme-color" content="#2f5d3a" />
+<style>
+  :root{
+    --forest:#274b31;      /* vert profond — texte/contraste fort */
+    --forest-2:#2f5d3a;
+    --sage:#5a7d5a;
+    --wheat:#c9a24b;       /* accent chaleureux */
+    --wheat-d:#a97f2e;
+    --cream:#f7f3ea;       /* fond clair */
+    --cream-2:#efe7d6;
+    --ink:#1d2a1f;         /* texte principal (contraste AA sur crème) */
+    --ink-soft:#3c4a3e;
+    --white:#ffffff;
+    --radius:14px;
+    --shadow:0 10px 30px rgba(29,42,31,.12);
+    --maxw:1120px;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;font-family:var(--sans);color:var(--ink);background:var(--cream);
+    line-height:1.65;font-size:clamp(16px,1.05vw + 12px,18px);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:var(--serif);line-height:1.15;color:var(--forest);font-weight:600;letter-spacing:.2px}
+  h1{font-size:clamp(2.1rem,4.5vw,3.6rem);margin:0 0 .4em}
+  h2{font-size:clamp(1.6rem,3vw,2.4rem);margin:0 0 .5em}
+  h3{font-size:1.2rem;margin:0 0 .35em;color:var(--forest-2)}
+  p{margin:0 0 1em}
+  a{color:var(--forest-2)}
+  img{max-width:100%;display:block}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(18px,4vw,40px)}
+  .section{padding:clamp(52px,7vw,96px) 0}
+  .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.18em;
+    font-size:.78rem;font-weight:700;color:var(--wheat-d);margin:0 0 .8em}
+  /* Boutons */
+  .btn{display:inline-flex;align-items:center;gap:.55em;font-weight:700;font-family:var(--sans);
+    text-decoration:none;padding:.85em 1.5em;border-radius:999px;border:2px solid transparent;
+    font-size:1rem;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease,background .15s}
+  .btn:focus-visible{outline:3px solid var(--wheat);outline-offset:3px}
+  .btn-primary{background:var(--wheat);color:#231a05;box-shadow:var(--shadow)}
+  .btn-primary:hover{transform:translateY(-2px)}
+  .btn-ghost{background:transparent;color:var(--forest);border-color:var(--forest)}
+  .btn-ghost:hover{background:var(--forest);color:var(--white)}
+  .btn-light{background:var(--white);color:var(--forest)}
+  .btn-light:hover{transform:translateY(-2px)}
+  /* Header */
+  header.site{position:sticky;top:0;z-index:50;background:rgba(247,243,234,.92);
+    backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid var(--cream-2)}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:70px}
+  .brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--forest);font-weight:800}
+  .brand .logo{width:38px;height:38px;flex:0 0 auto}
+  .brand b{font-family:var(--serif);font-size:1.2rem;letter-spacing:.3px}
+  .nav-links{display:flex;gap:1.4rem;align-items:center;list-style:none;margin:0;padding:0}
+  .nav-links a{text-decoration:none;color:var(--ink-soft);font-weight:600;font-size:.98rem}
+  .nav-links a:hover{color:var(--forest)}
+  .nav-cta{display:flex;gap:.6rem;align-items:center}
+  .menu-btn{display:none;background:none;border:0;cursor:pointer;padding:.4rem}
+  @media(max-width:860px){
+    .nav-links{display:none}
+    .nav-cta .btn-ghost{display:none}
+  }
+  /* Hero */
+  .hero{position:relative;color:var(--white);text-align:left;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;background:
+      linear-gradient(120deg,rgba(20,38,25,.86),rgba(39,75,49,.62) 55%,rgba(39,75,49,.30)),
+      radial-gradient(1200px 500px at 80% 0%,rgba(201,162,75,.30),transparent 60%),
+      linear-gradient(160deg,#3a6b45,#22432c);z-index:0}
+  .hero .wrap{position:relative;z-index:1;padding-top:clamp(60px,9vw,120px);padding-bottom:clamp(60px,9vw,120px)}
+  .hero-inner{max-width:720px}
+  .hero p.lead{font-size:clamp(1.05rem,1.6vw,1.3rem);color:#f3efe3;max-width:56ch}
+  .hero h1{color:var(--white)}
+  .hero .badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);
+    padding:.4em 1em;border-radius:999px;font-size:.82rem;font-weight:700;letter-spacing:.05em;margin-bottom:1.2em}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:1.6em}
+  .hero-stats{display:flex;flex-wrap:wrap;gap:2.2rem;margin-top:2.6em;padding-top:1.6em;border-top:1px solid rgba(255,255,255,.22)}
+  .hero-stats .n{font-family:var(--serif);font-size:1.9rem;color:var(--wheat);font-weight:700;line-height:1}
+  .hero-stats .l{font-size:.86rem;color:#eee6d3}
+  /* Piliers / mission */
+  .grid{display:grid;gap:1.4rem}
+  .cols-3{grid-template-columns:repeat(3,1fr)}
+  .cols-2{grid-template-columns:1.1fr .9fr}
+  @media(max-width:820px){.cols-3{grid-template-columns:1fr}.cols-2{grid-template-columns:1fr}}
+  .card{background:var(--white);border:1px solid var(--cream-2);border-radius:var(--radius);
+    padding:1.6rem;box-shadow:0 4px 14px rgba(29,42,31,.06)}
+  .card .ico{width:46px;height:46px;border-radius:12px;background:var(--cream-2);display:grid;place-items:center;margin-bottom:1rem;color:var(--forest-2)}
+  .lead-block{background:var(--forest);color:#eef3ea;border-radius:var(--radius);padding:clamp(1.6rem,3vw,2.6rem)}
+  .lead-block h2{color:var(--white)}
+  /* Programme quotidien */
+  .timeline{list-style:none;margin:0;padding:0;display:grid;gap:.2rem}
+  .timeline li{display:grid;grid-template-columns:88px 1fr;gap:1rem;padding:.9rem 0;border-bottom:1px dashed var(--cream-2)}
+  .timeline .t{font-weight:800;color:var(--wheat-d);font-variant-numeric:tabular-nums}
+  .timeline b{color:var(--forest)}
+  /* Témoignages */
+  .quotes{display:grid;gap:1.4rem;grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.quotes{grid-template-columns:1fr}}
+  blockquote{margin:0;background:var(--white);border-left:5px solid var(--wheat);
+    border-radius:0 var(--radius) var(--radius) 0;padding:1.5rem 1.6rem;box-shadow:0 4px 14px rgba(29,42,31,.06)}
+  blockquote p{font-family:var(--serif);font-size:1.12rem;color:var(--ink)}
+  .who{display:flex;align-items:center;gap:.8rem;margin-top:1rem}
+  .who .av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#5a7d5a,#274b31);flex:0 0 auto}
+  .who b{color:var(--forest)}
+  .who span{display:block;font-size:.85rem;color:var(--ink-soft)}
+  /* Calendrier */
+  .cal{display:grid;gap:1rem}
+  .event{display:grid;grid-template-columns:76px 1fr auto;gap:1.1rem;align-items:center;
+    background:var(--white);border:1px solid var(--cream-2);border-radius:var(--radius);padding:1rem 1.2rem}
+  .event .date{background:var(--forest);color:var(--white);border-radius:10px;text-align:center;padding:.5rem;line-height:1}
+  .event .date .d{font-size:1.5rem;font-weight:800;font-family:var(--serif)}
+  .event .date .m{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em}
+  .event .tag{font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+    color:var(--wheat-d);display:block;margin-bottom:.15rem}
+  @media(max-width:600px){.event{grid-template-columns:64px 1fr}.event .btn{grid-column:1/-1}}
+  /* Dons + bénévolat */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+  @media(max-width:820px){.split{grid-template-columns:1fr}}
+  .panel{border-radius:var(--radius);padding:clamp(1.5rem,3vw,2.2rem)}
+  .panel.donate{background:linear-gradient(160deg,#2f5d3a,#22432c);color:#eef3ea}
+  .panel.donate h2{color:#fff}
+  .amounts{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0}
+  .amounts button{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.4);color:#fff;
+    padding:.6em 1.1em;border-radius:999px;font-weight:700;cursor:pointer;font-size:1rem}
+  .amounts button.active,.amounts button:hover{background:var(--wheat);color:#231a05;border-color:var(--wheat)}
+  .toggle{display:inline-flex;background:rgba(255,255,255,.12);border-radius:999px;padding:3px;margin-bottom:.8rem}
+  .toggle button{background:none;border:0;color:#fff;padding:.4em 1em;border-radius:999px;cursor:pointer;font-weight:700}
+  .toggle button.active{background:var(--white);color:var(--forest)}
+  .panel.volunteer{background:var(--white);border:1px solid var(--cream-2)}
+  .field{margin-bottom:.9rem}
+  label{display:block;font-weight:600;font-size:.9rem;margin-bottom:.35rem;color:var(--ink-soft)}
+  input,select{width:100%;padding:.7em .9em;border:1.5px solid #cfc6b2;border-radius:10px;font:inherit;background:var(--cream)}
+  input:focus,select:focus{outline:3px solid var(--wheat);outline-offset:1px;border-color:var(--forest)}
+  /* Boutique future */
+  .future{border:2px dashed var(--sage);border-radius:var(--radius);padding:clamp(1.4rem,3vw,2rem);
+    background:var(--cream-2);display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap;justify-content:space-between}
+  .future .pill{background:var(--wheat);color:#231a05;font-weight:800;font-size:.72rem;letter-spacing:.08em;
+    text-transform:uppercase;padding:.35em .8em;border-radius:999px}
+  /* Footer */
+  footer.site{background:var(--forest);color:#dce7dc;padding:clamp(40px,6vw,72px) 0 30px}
+  footer.site a{color:#e9dfc5;text-decoration:none}
+  footer.site a:hover{text-decoration:underline}
+  .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:2rem}
+  @media(max-width:760px){.foot-grid{grid-template-columns:1fr}}
+  .foot-grid h4{font-family:var(--sans);text-transform:uppercase;letter-spacing:.1em;font-size:.8rem;color:#b9cab9;margin:0 0 .8rem}
+  .foot-grid ul{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
+  .copyright{border-top:1px solid rgba(255,255,255,.15);margin-top:2rem;padding-top:1.4rem;font-size:.85rem;color:#a9bca9;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.6rem}
+  .demo-flag{background:var(--wheat-d);color:#fff;text-align:center;font-size:.8rem;font-weight:700;padding:.5em;letter-spacing:.03em}
+  .skip{position:absolute;left:-999px}
+  .skip:focus{position:static;display:inline-block;background:var(--forest);color:#fff;padding:.6em 1em}
+  .muted{color:var(--ink-soft);font-size:.92rem}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Aller au contenu principal</a>
+<div class="demo-flag">Maquette de démonstration — La Ferme Renaissance (contenu et visuels d'exemple)</div>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="brand" href="#" aria-label="La Ferme Renaissance, accueil">
+      <svg class="logo" viewBox="0 0 48 48" role="img" aria-hidden="true">
+        <circle cx="24" cy="24" r="23" fill="#2f5d3a"/>
+        <path d="M24 11c6 5 9 9 9 15a9 9 0 1 1-18 0c0-6 3-10 9-15z" fill="#c9a24b"/>
+        <path d="M24 19v16M24 26l-5-4M24 30l5-4" stroke="#22432c" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </svg>
+      <b>La Ferme Renaissance</b>
+    </a>
+    <nav aria-label="Navigation principale">
+      <ul class="nav-links">
+        <li><a href="#mission">Mission</a></li>
+        <li><a href="#programme">Programme</a></li>
+        <li><a href="#temoignages">Témoignages</a></li>
+        <li><a href="#evenements">Événements</a></li>
+        <li><a href="#benevolat">Bénévolat</a></li>
+      </ul>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="#benevolat">Devenir bénévole</a>
+      <a class="btn btn-primary" href="#dons">Faire un don</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HÉROS -->
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="hero-inner">
+        <span class="badge">Programme de réinsertion à la ferme</span>
+        <h1>Après la peine, un nouveau départ prend racine.</h1>
+        <p class="lead">La Ferme Renaissance accueille les femmes et les hommes qui ont purgé leur peine et leur offre un logement, une formation pratique et une communauté pour reconstruire une vie digne après la libération.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#dons">Soutenir la ferme</a>
+          <a class="btn btn-light" href="#mission">Découvrir notre mission</a>
+        </div>
+        <div class="hero-stats">
+          <div><div class="n">120+</div><div class="l">résidents accompagnés</div></div>
+          <div><div class="n">78 %</div><div class="l">emploi ou formation à la sortie</div></div>
+          <div><div class="n">9 ha</div><div class="l">de terres cultivées ensemble</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION -->
+  <section class="section" id="mission">
+    <div class="wrap">
+      <p class="eyebrow">Qui nous sommes</p>
+      <div class="grid cols-2">
+        <div>
+          <h2>Redonner de l'espoir par le travail de la terre et le lien humain</h2>
+          <p>Trop de personnes sortent de prison sans logement, sans revenu et sans réseau — les conditions mêmes de la récidive. Notre ferme brise ce cycle : un cadre stable, un rythme de vie sain et des compétences réelles, recherchées par les employeurs.</p>
+          <p>Chaque résident construit un projet concret : maraîchage, menuiserie, cuisine, gestion d'un potager. Le travail redonne confiance ; la communauté redonne une place.</p>
+          <a class="btn btn-ghost" href="#programme">Voir comment fonctionne le programme</a>
+        </div>
+        <div class="lead-block">
+          <h2>Nos objectifs</h2>
+          <ul style="padding-left:1.1em;margin:0">
+            <li>Un <b>logement sûr</b> dès le premier jour de liberté.</li>
+            <li>Des <b>compétences pratiques</b> certifiées et transférables.</li>
+            <li>Un <b>accompagnement humain</b> : mentorat, santé, réinsertion sociale.</li>
+            <li>Une <b>sortie préparée</b> : emploi, logement autonome, réseau de soutien.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PILIERS -->
+  <section class="section" style="background:var(--cream-2)" id="modele">
+    <div class="wrap">
+      <p class="eyebrow">Le modèle d'hébergement à la ferme</p>
+      <h2>Trois piliers pour reconstruire une vie</h2>
+      <div class="grid cols-3" style="margin-top:1.6rem">
+        <div class="card">
+          <div class="ico" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9h14v-9"/><path d="M10 19v-5h4v5"/></svg>
+          </div>
+          <h3>Se loger</h3>
+          <p>Un hébergement digne et encadré à la ferme, pensé pour retrouver stabilité et sécurité dès la libération.</p>
+        </div>
+        <div class="card">
+          <div class="ico" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l9 4-9 4-9-4 9-4z"/><path d="M21 7v6"/><path d="M6 9v5c0 2 3 3 6 3s6-1 6-3V9"/></svg>
+          </div>
+          <h3>Se former</h3>
+          <p>Maraîchage, artisanat, cuisine, gestion : des savoir-faire concrets, certifiés et valorisés par les employeurs.</p>
+        </div>
+        <div class="card">
+          <div class="ico" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 8.5a4 4 0 0 0-7-2.6A4 4 0 0 0 6 8.5c0 4 7 8.5 7 8.5s7-4.5 7-8.5z"/></svg>
+          </div>
+          <h3>Se relier</h3>
+          <p>Mentorat, entraide et vie collective : recréer un réseau humain solide, condition d'une réinsertion durable.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAMME QUOTIDIEN -->
+  <section class="section" id="programme">
+    <div class="wrap">
+      <div class="grid cols-2">
+        <div>
+          <p class="eyebrow">Une journée à la ferme</p>
+          <h2>Un rythme qui remet debout</h2>
+          <p>La régularité est thérapeutique. Chaque journée mêle travail, apprentissage, temps collectif et accompagnement individuel — un cadre qui redonne des repères et de la fierté.</p>
+          <p class="muted">Exemple de programme type, adapté aux saisons et aux projets de chacun.</p>
+        </div>
+        <div>
+          <ul class="timeline">
+            <li><span class="t">6 h 30</span><span><b>Lever &amp; petit-déjeuner commun</b><br><span class="muted">Ouverture de la journée, répartition des tâches.</span></span></li>
+            <li><span class="t">7 h 30</span><span><b>Travaux de la ferme</b><br><span class="muted">Maraîchage, soin des animaux, entretien des espaces.</span></span></li>
+            <li><span class="t">12 h 00</span><span><b>Repas préparé par l'atelier cuisine</b></span></li>
+            <li><span class="t">14 h 00</span><span><b>Formation &amp; certification</b><br><span class="muted">Modules pratiques et théoriques.</span></span></li>
+            <li><span class="t">17 h 00</span><span><b>Mentorat &amp; suivi individuel</b></span></li>
+            <li><span class="t">19 h 00</span><span><b>Temps collectif</b><br><span class="muted">Parole, projets, moments de vie partagés.</span></span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TÉMOIGNAGES -->
+  <section class="section" style="background:var(--forest);color:#eef3ea" id="temoignages">
+    <div class="wrap">
+      <p class="eyebrow" style="color:var(--wheat)">Des vies transformées</p>
+      <h2 style="color:#fff">Ils sont passés par la ferme</h2>
+      <p style="max-width:60ch;color:#dbe6db">Espace prévu pour des témoignages avec photos et courtes vidéos des résidents dont la vie a été transformée par le programme.</p>
+      <div class="quotes" style="margin-top:1.8rem">
+        <blockquote>
+          <p>« En sortant, je n'avais nulle part où aller. Ici, j'ai appris un métier et j'ai retrouvé une raison de me lever. Aujourd'hui je travaille dans une exploitation. »</p>
+          <div class="who"><span class="av" aria-hidden="true"></span><span><b>Marc, 38 ans</b><span>Ancien résident — 2024</span></span></div>
+        </blockquote>
+        <blockquote>
+          <p>« La ferme ne m'a pas jugée. On m'a fait confiance, on m'a formée. J'ai repris confiance en moi et j'ai un logement stable depuis. »</p>
+          <div class="who"><span class="av" aria-hidden="true"></span><span><b>Awa, 31 ans</b><span>Ancienne résidente — 2023</span></span></div>
+        </blockquote>
+      </div>
+      <p style="margin-top:1.8rem"><a class="btn btn-light" href="#temoignages">Voir tous les témoignages</a></p>
+    </div>
+  </section>
+
+  <!-- CALENDRIER -->
+  <section class="section" id="evenements">
+    <div class="wrap">
+      <div class="grid cols-2" style="align-items:end">
+        <div>
+          <p class="eyebrow">Toujours visible pour nos donateurs</p>
+          <h2>Prochains événements</h2>
+          <p>Journées portes ouvertes, ateliers et remises de diplômes. Ce calendrier est <b>modifiable par l'équipe sans coder</b>.</p>
+        </div>
+        <div style="text-align:right"><a class="btn btn-ghost" href="#evenements">Voir le calendrier complet</a></div>
+      </div>
+      <div class="cal" style="margin-top:1.6rem">
+        <div class="event">
+          <div class="date"><div class="d">14</div><div class="m">Août</div></div>
+          <div><span class="tag">Portes ouvertes</span><b>Visite de la ferme &amp; rencontre des résidents</b><div class="muted">10 h – 16 h · Sur inscription</div></div>
+          <a class="btn btn-primary" href="#benevolat">S'inscrire</a>
+        </div>
+        <div class="event">
+          <div class="date"><div class="d">02</div><div class="m">Sept</div></div>
+          <div><span class="tag">Atelier</span><b>Initiation au maraîchage biologique</b><div class="muted">14 h – 17 h · Places limitées</div></div>
+          <a class="btn btn-primary" href="#benevolat">S'inscrire</a>
+        </div>
+        <div class="event">
+          <div class="date"><div class="d">21</div><div class="m">Sept</div></div>
+          <div><span class="tag">Cérémonie</span><b>Remise de diplômes — Promotion 2026</b><div class="muted">17 h · Ouvert aux familles et donateurs</div></div>
+          <a class="btn btn-primary" href="#benevolat">S'inscrire</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DONS + BÉNÉVOLAT -->
+  <section class="section" style="background:var(--cream-2)">
+    <div class="wrap">
+      <div class="split">
+        <!-- DONS -->
+        <div class="panel donate" id="dons">
+          <p class="eyebrow" style="color:var(--wheat)">Votre soutien change une vie</p>
+          <h2>Faire un don</h2>
+          <p>Chaque don finance un logement, un repas, une formation. Ponctuel ou mensuel, il reconstruit un avenir.</p>
+          <div class="toggle" role="group" aria-label="Fréquence du don">
+            <button type="button" class="active" data-freq>Ponctuel</button>
+            <button type="button" data-freq>Mensuel</button>
+          </div>
+          <div class="amounts" role="group" aria-label="Montant du don">
+            <button type="button">25 €</button>
+            <button type="button" class="active">50 €</button>
+            <button type="button">100 €</button>
+            <button type="button">Autre</button>
+          </div>
+          <a class="btn btn-primary" href="#" style="width:100%;justify-content:center">Donner en sécurité →</a>
+          <p style="font-size:.82rem;color:#cfe0cf;margin-top:.9rem;margin-bottom:0">Paiement sécurisé via Stripe / PayPal · Dons récurrents disponibles · Reçu fiscal automatique.</p>
+        </div>
+        <!-- BÉNÉVOLAT -->
+        <div class="panel volunteer" id="benevolat">
+          <p class="eyebrow">Donnez de votre temps</p>
+          <h2>Devenir bénévole</h2>
+          <p class="muted">Vos coordonnées sont transmises automatiquement à notre liste (Mailchimp) — aucune saisie manuelle pour l'équipe.</p>
+          <form onsubmit="event.preventDefault();this.querySelector('.ok').hidden=false;">
+            <div class="field"><label for="v-name">Nom complet</label><input id="v-name" type="text" autocomplete="name" required></div>
+            <div class="field"><label for="v-mail">Adresse e-mail</label><input id="v-mail" type="email" autocomplete="email" required></div>
+            <div class="field"><label for="v-int">Domaine qui vous intéresse</label>
+              <select id="v-int"><option>Travaux de la ferme</option><option>Formation / mentorat</option><option>Événements</option><option>Communication</option></select></div>
+            <button class="btn btn-primary" type="submit" style="width:100%;justify-content:center">Rejoindre l'équipe bénévole</button>
+            <p class="ok muted" hidden style="margin-top:.8rem;color:var(--forest);font-weight:700">Merci ! (démo — l'inscription serait envoyée à Mailchimp.)</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOUTIQUE FUTURE -->
+  <section class="section" id="boutique">
+    <div class="wrap">
+      <div class="future">
+        <div>
+          <span class="pill">Extension future</span>
+          <h3 style="margin:.6rem 0 .2rem">Une boutique d'artisanat solidaire</h3>
+          <p class="muted" style="margin:0">Les créations des résidents (bois, poterie, produits de la ferme) seront vendues en ligne — pensé pour s'ajouter au site <b>sans refonte</b>, une fois la vitrine principale stable.</p>
+        </div>
+        <a class="btn btn-ghost" href="#dons">En savoir plus</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPEL FINAL -->
+  <section class="section" style="text-align:center;background:linear-gradient(160deg,#2f5d3a,#22432c);color:#eef3ea">
+    <div class="wrap">
+      <h2 style="color:#fff">Ensemble, faisons de la libération un vrai départ.</h2>
+      <p style="max-width:56ch;margin:0 auto 1.6em;color:#dbe6db">Un don, quelques heures de bénévolat, une visite : chaque geste compte pour reconstruire une vie.</p>
+      <div style="display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap">
+        <a class="btn btn-primary" href="#dons">Faire un don</a>
+        <a class="btn btn-light" href="#benevolat">Devenir bénévole</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="#" style="color:#fff"><svg class="logo" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="#c9a24b"/><path d="M24 11c6 5 9 9 9 15a9 9 0 1 1-18 0c0-6 3-10 9-15z" fill="#22432c"/></svg><b style="color:#fff">La Ferme Renaissance</b></a>
+        <p style="margin-top:1rem;max-width:40ch;color:#c8d6c8">Logement, formation et communauté pour reconstruire une vie après la prison.</p>
+      </div>
+      <div>
+        <h4>Naviguer</h4>
+        <ul>
+          <li><a href="#mission">Mission</a></li>
+          <li><a href="#programme">Programme</a></li>
+          <li><a href="#temoignages">Témoignages</a></li>
+          <li><a href="#evenements">Événements</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Agir</h4>
+        <ul>
+          <li><a href="#dons">Faire un don</a></li>
+          <li><a href="#benevolat">Devenir bénévole</a></li>
+          <li><a href="#boutique">Boutique (bientôt)</a></li>
+          <li><a href="#evenements">Portes ouvertes</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright">
+      <span>© 2026 La Ferme Renaissance — Maquette de démonstration.</span>
+      <span>Conception &amp; développement : proposition freelance.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Interactions de démo (montants / fréquence)
+  document.querySelectorAll('.amounts').forEach(function(g){
+    g.addEventListener('click',function(e){
+      var b=e.target.closest('button'); if(!b)return;
+      g.querySelectorAll('button').forEach(function(x){x.classList.remove('active')});
+      b.classList.add('active');
+    });
+  });
+  document.querySelectorAll('.toggle').forEach(function(g){
+    g.addEventListener('click',function(e){
+      var b=e.target.closest('button'); if(!b)return;
+      g.querySelectorAll('button').forEach(function(x){x.classList.remove('active')});
+      b.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
