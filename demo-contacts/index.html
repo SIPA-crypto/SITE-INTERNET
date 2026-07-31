@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gestionnaire de contacts — Démo (SIPA Tech Solutions)</title>
+<meta name="description" content="Démo interactive d'un gestionnaire de contacts web (PHP/MySQL) : connexion sécurisée, CRUD, recherche instantanée, import/export CSV." />
+<meta name="robots" content="noindex" />
+<style>
+  :root{
+    --navy:#0d2438;--navy2:#12324c;--gold:#e0a53f;--gold-d:#c58c22;
+    --bg:#f4f6f9;--card:#ffffff;--line:#e3e8ef;--ink:#1d2a36;--soft:#5b6b7a;
+    --ok:#1c9d6b;--danger:#d3455b;--radius:12px;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:15px;line-height:1.5}
+  button{font:inherit;cursor:pointer}
+  input,select,textarea{font:inherit}
+  .demo-flag{background:var(--gold-d);color:#fff;text-align:center;font-size:13px;font-weight:600;padding:7px}
+  .hidden{display:none!important}
+  /* ---- LOGIN ---- */
+  .login-wrap{min-height:100vh;display:grid;place-items:center;padding:24px;
+    background:radial-gradient(1000px 500px at 80% -10%,rgba(224,165,63,.14),transparent 60%),
+      linear-gradient(160deg,#0d2438,#0a1c2c)}
+  .login-card{background:var(--card);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.35);
+    width:100%;max-width:390px;padding:38px 34px}
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+  .brand .mark{width:44px;height:44px;border-radius:11px;background:linear-gradient(135deg,var(--navy),var(--navy2));
+    display:grid;place-items:center;color:var(--gold);font-weight:800;font-size:20px}
+  .brand b{font-size:17px;letter-spacing:.5px}.brand span{display:block;font-size:11px;letter-spacing:2px;color:var(--soft)}
+  .login-card h1{font-size:20px;margin:18px 0 4px}
+  .login-card p.sub{color:var(--soft);font-size:13.5px;margin-bottom:22px}
+  .field{margin-bottom:15px}
+  label{display:block;font-size:13px;font-weight:600;color:var(--soft);margin-bottom:6px}
+  input,select,textarea{width:100%;padding:11px 13px;border:1.5px solid var(--line);border-radius:9px;background:#fbfcfe}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(224,165,63,.18)}
+  .btn{border:0;border-radius:9px;padding:11px 18px;font-weight:600;display:inline-flex;align-items:center;gap:8px;justify-content:center}
+  .btn-primary{background:linear-gradient(135deg,var(--gold),var(--gold-d));color:#2b1e05}
+  .btn-primary:hover{filter:brightness(1.05)}
+  .btn-navy{background:var(--navy);color:#fff}.btn-navy:hover{background:var(--navy2)}
+  .btn-ghost{background:#fff;border:1.5px solid var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--gold)}
+  .btn-block{width:100%}
+  .hint{font-size:12px;color:var(--soft);margin-top:14px;text-align:center}
+  /* ---- APP ---- */
+  .topbar{background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:space-between;
+    padding:0 20px;height:60px;position:sticky;top:0;z-index:10}
+  .topbar .brand b{color:#fff}.topbar .brand span{color:#9fb3c6}
+  .topbar .mark{background:rgba(255,255,255,.1)}
+  .who{display:flex;align-items:center;gap:14px;font-size:13.5px;color:#cdd9e5}
+  .who .avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-d));
+    display:grid;place-items:center;color:#2b1e05;font-weight:700}
+  .container{max-width:1160px;margin:0 auto;padding:24px 20px 60px}
+  .page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+  .page-head h2{font-size:22px}.page-head p{color:var(--soft);font-size:13.5px;margin-top:3px}
+  .stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 18px;min-width:150px}
+  .stat .n{font-size:26px;font-weight:800;color:var(--navy)}
+  .stat .l{font-size:12.5px;color:var(--soft);text-transform:uppercase;letter-spacing:.5px}
+  .toolbar{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px;
+    display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+  .search{position:relative;flex:1;min-width:220px}
+  .search input{padding-left:38px}
+  .search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--soft)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  .table-scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;min-width:720px}
+  th,td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line);font-size:14px;white-space:nowrap}
+  th{background:#f7f9fc;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--soft);cursor:pointer;user-select:none}
+  th:hover{color:var(--navy)}
+  tbody tr:hover{background:#f9fbfd}
+  td .name{font-weight:600}
+  td.email{color:var(--navy)}
+  .tag{display:inline-block;background:#eef3f8;color:var(--soft);font-size:12px;padding:2px 9px;border-radius:20px}
+  .row-actions{display:flex;gap:6px}
+  .icon-btn{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:#fff;display:grid;place-items:center;color:var(--soft)}
+  .icon-btn:hover{border-color:var(--gold);color:var(--navy)}
+  .icon-btn.del:hover{border-color:var(--danger);color:var(--danger)}
+  .icon-btn svg{width:15px;height:15px}
+  .pager{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;flex-wrap:wrap}
+  .pager .info{font-size:13px;color:var(--soft)}
+  .pager .pages{display:flex;gap:6px}
+  .pg{min-width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:#fff;padding:0 8px}
+  .pg.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .pg:disabled{opacity:.4;cursor:default}
+  .empty{padding:40px;text-align:center;color:var(--soft)}
+  /* modal */
+  .overlay{position:fixed;inset:0;background:rgba(13,36,56,.55);display:grid;place-items:center;padding:20px;z-index:50}
+  .modal{background:#fff;border-radius:14px;width:100%;max-width:520px;max-height:90vh;overflow:auto;box-shadow:0 30px 70px rgba(0,0,0,.35)}
+  .modal-head{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+  .modal-head h3{font-size:18px}
+  .modal-body{padding:22px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .modal-foot{padding:16px 22px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:10px}
+  .x{background:none;border:0;font-size:22px;color:var(--soft);line-height:1}
+  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;
+    padding:12px 20px;border-radius:10px;font-size:14px;box-shadow:0 12px 30px rgba(0,0,0,.3);z-index:100;opacity:0;transition:.25s;pointer-events:none}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(-4px)}
+  @media(max-width:560px){.grid2{grid-template-columns:1fr}.who .txt{display:none}}
+</style>
+</head>
+<body>
+<div class="demo-flag">Démonstration interactive — données fictives · Version finale développée en PHP / MySQL</div>
+
+<!-- ============ LOGIN ============ -->
+<div class="login-wrap" id="loginView">
+  <form class="login-card" id="loginForm">
+    <div class="brand"><span class="mark">S</span><div><b>SIPA</b><span>TECH SOLUTIONS</span></div></div>
+    <h1>Gestionnaire de contacts</h1>
+    <p class="sub">Espace administrateur sécurisé</p>
+    <div class="field"><label for="user">Identifiant</label><input id="user" value="admin" autocomplete="username"></div>
+    <div class="field"><label for="pass">Mot de passe</label><input id="pass" type="password" value="demo1234" autocomplete="current-password"></div>
+    <button class="btn btn-primary btn-block" type="submit">Se connecter</button>
+    <p class="hint">Démo : identifiants pré-remplis, cliquez simplement sur « Se connecter ».</p>
+  </form>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="appView" class="hidden">
+  <div class="topbar">
+    <div class="brand"><span class="mark">S</span><div><b>SIPA</b><span>GESTION CONTACTS</span></div></div>
+    <div class="who"><span class="txt">Administrateur</span><span class="avatar">A</span>
+      <button class="btn btn-ghost" id="logoutBtn" style="padding:8px 12px">Déconnexion</button></div>
+  </div>
+
+  <div class="container">
+    <div class="page-head">
+      <div><h2>Mes contacts</h2><p>Ajoutez, modifiez, recherchez et exportez vos contacts.</p></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="n" id="statTotal">0</div><div class="l">Contacts</div></div>
+      <div class="stat"><div class="n" id="statCompanies">0</div><div class="l">Entreprises</div></div>
+      <div class="stat"><div class="n" id="statShown">0</div><div class="l">Affichés (filtre)</div></div>
+    </div>
+
+    <div class="toolbar">
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+        <input id="searchInput" placeholder="Rechercher par nom ou entreprise…">
+      </div>
+      <button class="btn btn-navy" id="addBtn">+ Nouveau contact</button>
+      <button class="btn btn-ghost" id="importBtn">Importer CSV</button>
+      <button class="btn btn-ghost" id="exportBtn">Exporter CSV</button>
+      <input type="file" id="csvFile" accept=".csv" class="hidden">
+    </div>
+
+    <div class="card">
+      <div class="table-scroll">
+        <table>
+          <thead><tr>
+            <th data-sort="name">Nom</th>
+            <th data-sort="company">Entreprise</th>
+            <th data-sort="email">Email</th>
+            <th data-sort="phone">Téléphone</th>
+            <th data-sort="city">Ville</th>
+            <th style="text-align:right">Actions</th>
+          </tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+      <div class="empty hidden" id="emptyState">Aucun contact ne correspond à votre recherche.</div>
+      <div class="pager">
+        <div class="info" id="pagerInfo"></div>
+        <div class="pages" id="pagerPages"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal -->
+<div class="overlay hidden" id="overlay">
+  <form class="modal" id="contactForm">
+    <div class="modal-head"><h3 id="modalTitle">Nouveau contact</h3><button type="button" class="x" id="closeModal">&times;</button></div>
+    <div class="modal-body">
+      <div class="grid2">
+        <div class="field"><label>Prénom & nom *</label><input id="f_name" required></div>
+        <div class="field"><label>Entreprise</label><input id="f_company"></div>
+        <div class="field"><label>Email</label><input id="f_email" type="email"></div>
+        <div class="field"><label>Téléphone</label><input id="f_phone"></div>
+        <div class="field"><label>Ville</label><input id="f_city"></div>
+        <div class="field"><label>Catégorie</label><select id="f_cat"><option>Personnel</option><option>Professionnel</option><option>Fournisseur</option><option>Client</option></select></div>
+      </div>
+      <div class="field"><label>Notes</label><textarea id="f_notes" rows="2"></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-ghost" id="cancelModal">Annuler</button>
+      <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </div>
+  </form>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  // ---------- données de démo ----------
+  const prenoms=["Jean","Awa","Paul","Marie","Éric","Nadia","Samuel","Christelle","Franck","Aïcha","Olivier","Bea","Hervé","Sandrine","Yves","Grace","Landry","Josiane","Cédric","Rachel","Bruno","Léa","Serge","Diane","Patrick","Nina","Alain","Flore","Roger","Chantal"];
+  const noms=["Mballa","Nguema","Fotso","Kamdem","Ndiaye","Tchoumi","Bekolo","Ngono","Owona","Fongang","Manga","Etoa","Njoya","Abena","Ekambi","Sipa","Talla","Mbenga","Ondoua","Essomba"];
+  const villes=["Douala","Yaoundé","Bafoussam","Kribi","Garoua","Buea","Limbé","Ebolowa","Bertoua","Ngaoundéré"];
+  const ents=["Nova Immobilier","Café des Arts","Studio Lumière","BTP Concept","Green Farm","Boutique Élégance","Auto Prestige","Clinique Espoir","Éditions Sahel","Tech Nkolo","—","—","—"];
+  function rnd(a){return a[Math.floor(Math.random()*a.length)];}
+  let seq=1, contacts=[];
+  for(let i=0;i<47;i++){
+    const p=rnd(prenoms),n=rnd(noms),c=rnd(ents);
+    contacts.push({id:seq++,name:p+" "+n,company:c==="—"?"":c,
+      email:(p+"."+n).toLowerCase().replace(/[éè]/g,"e")+"@mail.com",
+      phone:"+237 6"+Math.floor(50+Math.random()*49)+" "+Math.floor(100+Math.random()*899)+" "+Math.floor(100+Math.random()*899),
+      city:rnd(villes),cat:rnd(["Personnel","Professionnel","Client","Fournisseur"]),notes:""});
+  }
+
+  // ---------- état ----------
+  let filtered=contacts.slice(), page=1, per=10, sortKey="name", sortDir=1, editId=null;
+  const $=s=>document.querySelector(s);
+
+  // ---------- login ----------
+  $("#loginForm").addEventListener("submit",e=>{e.preventDefault();
+    $("#loginView").classList.add("hidden");$("#appView").classList.remove("hidden");render();});
+  $("#logoutBtn").addEventListener("click",()=>{location.reload();});
+
+  // ---------- rendu ----------
+  function applyFilter(){
+    const q=$("#searchInput").value.trim().toLowerCase();
+    filtered=contacts.filter(c=>!q||c.name.toLowerCase().includes(q)||c.company.toLowerCase().includes(q));
+    filtered.sort((a,b)=>{const x=(a[sortKey]||"").toString().toLowerCase(),y=(b[sortKey]||"").toString().toLowerCase();return x<y?-sortDir:x>y?sortDir:0;});
+    const maxPage=Math.max(1,Math.ceil(filtered.length/per)); if(page>maxPage)page=maxPage;
+  }
+  function esc(s){return (s||"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));}
+  function render(){
+    applyFilter();
+    const total=contacts.length;
+    $("#statTotal").textContent=total;
+    $("#statCompanies").textContent=new Set(contacts.filter(c=>c.company).map(c=>c.company)).size;
+    $("#statShown").textContent=filtered.length;
+    const start=(page-1)*per, rows=filtered.slice(start,start+per);
+    const tb=$("#tbody"); tb.innerHTML="";
+    $("#emptyState").classList.toggle("hidden",filtered.length>0);
+    rows.forEach(c=>{
+      const tr=document.createElement("tr");
+      tr.innerHTML=`<td><span class="name">${esc(c.name)}</span></td>
+        <td>${c.company?esc(c.company):'<span class="tag">Particulier</span>'}</td>
+        <td class="email">${esc(c.email)}</td>
+        <td>${esc(c.phone)}</td>
+        <td>${esc(c.city)}</td>
+        <td><div class="row-actions" style="justify-content:flex-end">
+          <button class="icon-btn" data-edit="${c.id}" title="Modifier"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h4L18 10l-4-4L4 16z"/><path d="M13 5l4 4"/></svg></button>
+          <button class="icon-btn del" data-del="${c.id}" title="Supprimer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M9 7V5h6v2M7 7l1 13h8l1-13"/></svg></button>
+        </div></td>`;
+      tb.appendChild(tr);
+    });
+    // pager
+    const maxPage=Math.max(1,Math.ceil(filtered.length/per));
+    $("#pagerInfo").textContent=filtered.length?`Affichage ${start+1}–${Math.min(start+per,filtered.length)} sur ${filtered.length}`:"0 résultat";
+    const pp=$("#pagerPages"); pp.innerHTML="";
+    const mk=(lbl,pg,dis,act)=>{const b=document.createElement("button");b.className="pg"+(act?" active":"");b.textContent=lbl;b.disabled=dis;b.onclick=()=>{page=pg;render();};pp.appendChild(b);};
+    mk("‹",page-1,page<=1,false);
+    for(let i=1;i<=maxPage;i++){ if(maxPage>7 && (i>2 && i<maxPage-1) && Math.abs(i-page)>1){ if(i===3||i===maxPage-2){const s=document.createElement("span");s.textContent="…";s.style.padding="0 4px";s.style.color="#8290a0";pp.appendChild(s);} continue;} mk(i,i,false,i===page);}
+    mk("›",page+1,page>=maxPage,false);
+  }
+
+  $("#searchInput").addEventListener("input",()=>{page=1;render();});
+  document.querySelectorAll("th[data-sort]").forEach(th=>th.addEventListener("click",()=>{
+    const k=th.dataset.sort; if(sortKey===k)sortDir*=-1;else{sortKey=k;sortDir=1;} render();
+  }));
+  document.addEventListener("click",e=>{
+    const ed=e.target.closest("[data-edit]"), dl=e.target.closest("[data-del]");
+    if(ed)openModal(+ed.dataset.edit);
+    if(dl){const id=+dl.dataset.del;const c=contacts.find(x=>x.id===id);
+      if(confirm("Supprimer le contact « "+c.name+" » ?")){contacts=contacts.filter(x=>x.id!==id);render();toast("Contact supprimé");}}
+  });
+
+  // ---------- modal ----------
+  function openModal(id){
+    editId=id||null;
+    $("#modalTitle").textContent=id?"Modifier le contact":"Nouveau contact";
+    const c=id?contacts.find(x=>x.id===id):{name:"",company:"",email:"",phone:"",city:"",cat:"Personnel",notes:""};
+    f_name.value=c.name;f_company.value=c.company;f_email.value=c.email;f_phone.value=c.phone;f_city.value=c.city;f_cat.value=c.cat||"Personnel";f_notes.value=c.notes||"";
+    $("#overlay").classList.remove("hidden");
+  }
+  function closeModal(){$("#overlay").classList.add("hidden");}
+  $("#addBtn").onclick=()=>openModal(null);
+  $("#closeModal").onclick=closeModal;$("#cancelModal").onclick=closeModal;
+  $("#overlay").addEventListener("click",e=>{if(e.target===$("#overlay"))closeModal();});
+  $("#contactForm").addEventListener("submit",e=>{e.preventDefault();
+    const data={name:f_name.value.trim(),company:f_company.value.trim(),email:f_email.value.trim(),phone:f_phone.value.trim(),city:f_city.value.trim(),cat:f_cat.value,notes:f_notes.value.trim()};
+    if(editId){Object.assign(contacts.find(x=>x.id===editId),data);toast("Contact mis à jour");}
+    else{contacts.unshift(Object.assign({id:seq++},data));toast("Contact ajouté");}
+    closeModal();page=1;render();
+  });
+
+  // ---------- CSV ----------
+  $("#exportBtn").onclick=()=>{
+    const head=["Nom","Entreprise","Email","Telephone","Ville","Categorie","Notes"];
+    const lines=[head.join(",")].concat(filtered.map(c=>[c.name,c.company,c.email,c.phone,c.city,c.cat,c.notes]
+      .map(v=>{v=(v||"").toString();return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;}).join(",")));
+    const blob=new Blob(["﻿"+lines.join("\n")],{type:"text/csv;charset=utf-8"});
+    const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="contacts.csv";a.click();
+    toast("Export CSV téléchargé ("+filtered.length+" contacts)");
+  };
+  $("#importBtn").onclick=()=>$("#csvFile").click();
+  $("#csvFile").addEventListener("change",e=>{
+    const file=e.target.files[0]; if(!file)return;
+    const r=new FileReader();
+    r.onload=()=>{
+      const rows=parseCSV(r.result); let n=0;
+      rows.forEach((row,i)=>{ if(i===0 && /nom|name/i.test(row[0]))return;
+        if(!row[0])return;
+        contacts.unshift({id:seq++,name:row[0]||"",company:row[1]||"",email:row[2]||"",phone:row[3]||"",city:row[4]||"",cat:row[5]||"Personnel",notes:row[6]||""});n++;});
+      page=1;render();toast(n+" contact(s) importé(s) depuis le CSV");
+    };
+    r.readAsText(file);$("#csvFile").value="";
+  });
+  function parseCSV(text){
+    const rows=[];let row=[],cur="",q=false;
+    for(let i=0;i<text.length;i++){const ch=text[i];
+      if(q){ if(ch==='"'){ if(text[i+1]==='"'){cur+='"';i++;}else q=false;} else cur+=ch; }
+      else{ if(ch==='"')q=true; else if(ch===','){row.push(cur);cur="";}
+        else if(ch==='\n'||ch==='\r'){ if(cur!==""||row.length){row.push(cur);rows.push(row);row=[];cur="";} if(ch==='\r'&&text[i+1]==='\n')i++; }
+        else cur+=ch; } }
+    if(cur!==""||row.length){row.push(cur);rows.push(row);}
+    return rows;
+  }
+
+  // ---------- toast ----------
+  let tt;
+  function toast(msg){const t=$("#toast");t.textContent=msg;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2200);}
+})();
+</script>
+</body>
+</html>
