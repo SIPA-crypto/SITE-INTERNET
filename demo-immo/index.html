@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Meridian — Property Management &amp; Real Estate</title>
+<meta name="description" content="Meridian Property Management — trusted management and premium listings. Browse properties on an interactive map, read client testimonials and get in touch." />
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+  @font-face{font-family:'Sora';src:url('../assets/fonts/sora.woff2') format('woff2');font-weight:100 800;font-display:swap}
+  @font-face{font-family:'Manrope';src:url('../assets/fonts/manrope.woff2') format('woff2');font-weight:200 800;font-display:swap}
+  :root{
+    --navy:#12263f;--navy2:#1c3a5e;--gold:#c79a4b;--gold-d:#a97f2f;
+    --paper:#ffffff;--mist:#f4f6f9;--ink:#1a2433;--soft:#5d6b7d;--line:#e4e8ee;--radius:14px;
+    --serif:'Sora',system-ui,sans-serif;--sans:'Manrope',system-ui,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);color:var(--ink);background:var(--paper);line-height:1.6;font-size:16.5px;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:var(--serif);font-weight:800;line-height:1.08;letter-spacing:-.01em}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(20px,4vw,40px)}
+  .demo-flag{background:var(--navy);color:var(--gold);text-align:center;font-size:13px;font-weight:600;padding:8px}
+  .btn{display:inline-flex;align-items:center;gap:9px;font-weight:700;font-size:15.5px;padding:14px 24px;border-radius:10px;transition:transform .15s,background .15s}
+  .btn-gold{background:var(--gold);color:#231704}.btn-gold:hover{transform:translateY(-2px)}
+  .btn-navy{background:var(--navy);color:#fff}.btn-navy:hover{background:var(--navy2)}
+  .btn-outline{border:1.6px solid var(--navy);color:var(--navy)}.btn-outline:hover{background:var(--navy);color:#fff}
+  .eyebrow{font-weight:700;text-transform:uppercase;letter-spacing:.18em;font-size:12px;color:var(--gold-d)}
+  /* header */
+  header.nav{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:var(--serif);font-weight:800;font-size:20px;color:var(--navy)}
+  .brand .mk{width:36px;height:36px;border-radius:9px;background:var(--navy);display:grid;place-items:center;color:var(--gold);font-size:18px}
+  .nav-links{display:flex;gap:28px;font-weight:600;font-size:15px}
+  .nav-links a{color:var(--soft)}.nav-links a:hover{color:var(--navy)}
+  @media(max-width:860px){.nav-links{display:none}}
+  /* hero */
+  .hero{position:relative;color:#fff;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;background:linear-gradient(120deg,rgba(18,38,63,.92),rgba(18,38,63,.72)),linear-gradient(160deg,#1c3a5e,#0e1d31);z-index:0}
+  .hero .wrap{position:relative;z-index:1;padding:clamp(56px,9vw,110px) 0 clamp(46px,7vw,84px)}
+  .hero h1{font-size:clamp(2.4rem,5.2vw,4rem);max-width:15ch;margin:16px 0}
+  .hero p{font-size:clamp(1.05rem,1.6vw,1.25rem);color:#cdd8e6;max-width:52ch;margin-bottom:28px}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+  .hero-stats{display:flex;gap:40px;margin-top:44px;flex-wrap:wrap}
+  .hero-stats .n{font-family:var(--serif);font-weight:800;font-size:2rem;color:var(--gold)}
+  .hero-stats .l{font-size:13.5px;color:#b6c3d4}
+  /* services */
+  section{padding:clamp(52px,7vw,92px) 0}
+  .sec-head{max-width:620px;margin-bottom:42px}
+  .sec-head h2{font-size:clamp(1.9rem,4vw,2.8rem);margin:10px 0}
+  .sec-head p{color:var(--soft)}
+  .svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  @media(max-width:900px){.svc-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.svc-grid{grid-template-columns:1fr}}
+  .svc{background:var(--mist);border:1px solid var(--line);border-radius:var(--radius);padding:26px 22px}
+  .svc .ic{width:48px;height:48px;border-radius:12px;background:var(--navy);color:var(--gold);display:grid;place-items:center;margin-bottom:14px}
+  .svc .ic svg{width:24px;height:24px}
+  .svc h3{font-size:1.15rem;margin-bottom:6px}
+  .svc p{font-size:14.5px;color:var(--soft)}
+  /* properties */
+  .properties{background:var(--mist)}
+  .prop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media(max-width:900px){.prop-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:600px){.prop-grid{grid-template-columns:1fr}}
+  .prop{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:transform .15s,box-shadow .15s}
+  .prop:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(18,38,63,.12)}
+  .prop .img{aspect-ratio:16/11;position:relative;background:linear-gradient(160deg,#284869,#14273f);display:grid;place-items:center;color:#3f5f81}
+  .prop .img svg{width:34%;height:34%}
+  .prop .img .price{position:absolute;left:14px;bottom:14px;background:var(--gold);color:#231704;font-family:var(--serif);font-weight:800;padding:7px 13px;border-radius:8px;font-size:15px}
+  .prop .img .ph{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.12);color:#cdd8e6;font-size:10.5px;padding:5px 9px;border-radius:20px}
+  .prop .body{padding:18px 20px}
+  .prop .loc{font-size:12.5px;color:var(--gold-d);font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+  .prop h3{font-size:1.22rem;margin:4px 0 12px}
+  .prop .meta{display:flex;gap:16px;font-size:13.5px;color:var(--soft);border-top:1px solid var(--line);padding-top:12px}
+  .prop .meta span{display:flex;align-items:center;gap:6px}
+  .prop .meta svg{width:16px;height:16px;color:var(--navy2)}
+  /* map */
+  #map{height:440px;width:100%;border-radius:var(--radius);border:1px solid var(--line);z-index:1}
+  .map-note{margin-top:12px;font-size:13.5px;color:var(--soft)}
+  /* testimonials */
+  .tst-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media(max-width:900px){.tst-grid{grid-template-columns:1fr}}
+  .tst{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px}
+  .tst .stars{color:var(--gold);letter-spacing:2px;margin-bottom:10px}
+  .tst p{font-family:var(--serif);font-weight:600;font-size:1.06rem;line-height:1.45;margin-bottom:16px}
+  .who{display:flex;align-items:center;gap:12px}
+  .who .av{width:42px;height:42px;border-radius:50%;background:var(--navy);color:var(--gold);display:grid;place-items:center;font-weight:800;font-family:var(--serif)}
+  .who b{display:block;font-size:14.5px}.who span{font-size:12.5px;color:var(--soft)}
+  /* contact */
+  .contact{background:var(--navy);color:#fff}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+  @media(max-width:820px){.contact-grid{grid-template-columns:1fr}}
+  .contact h2{font-size:clamp(1.9rem,4vw,2.8rem);margin:10px 0 12px}
+  .contact p.lead{color:#cdd8e6;margin-bottom:22px;max-width:40ch}
+  .cinfo{display:flex;flex-direction:column;gap:14px;margin-top:8px}
+  .cinfo a,.cinfo div{display:flex;align-items:center;gap:12px;color:#dbe4ef;font-size:15px}
+  .cinfo .ic{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,.08);display:grid;place-items:center;color:var(--gold)}
+  .cinfo svg{width:19px;height:19px}
+  form{background:#fff;border-radius:16px;padding:26px}
+  .field{margin-bottom:14px}
+  label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--ink)}
+  input,select,textarea{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;font:inherit;background:var(--mist);color:var(--ink)}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold)}
+  .ok{display:none;background:var(--gold);color:#231704;font-weight:700;padding:13px;border-radius:10px;text-align:center;margin-top:6px}
+  /* footer */
+  footer{background:#0e1d31;color:#9fb0c4;padding:44px 0 28px;font-size:14px}
+  .foot-top{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center;padding-bottom:22px;border-bottom:1px solid #1e3452}
+  .foot-bottom{padding-top:18px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:13px;color:#6f8299}
+</style>
+</head>
+<body>
+<div class="demo-flag">Sample website — designed &amp; built by Patrick Sipa · SIPA Tech Solutions (demo content)</div>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a href="#" class="brand"><span class="mk">◆</span>Meridian</a>
+    <nav class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#properties">Properties</a>
+      <a href="#map-sec">Map</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href="#contact" class="btn btn-gold" style="padding:10px 18px">Get in touch</a>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="wrap">
+      <span class="eyebrow" style="color:var(--gold)">Property Management &amp; Real Estate</span>
+      <h1>Property management you can genuinely trust.</h1>
+      <p>We manage and showcase premium properties with care — protecting your investment and making every client feel confident from the first conversation.</p>
+      <div class="hero-cta">
+        <a href="#properties" class="btn btn-gold">Browse properties</a>
+        <a href="#contact" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,.5)">Request a valuation</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="n">450+</div><div class="l">Properties managed</div></div>
+        <div><div class="n">12 yrs</div><div class="l">In business</div></div>
+        <div><div class="n">98%</div><div class="l">Client retention</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="wrap">
+      <div class="sec-head"><span class="eyebrow">What we do</span><h2>Full-service property management</h2><p>Everything your property needs, handled by one trusted team.</p></div>
+      <div class="svc-grid">
+        <div class="svc"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></div><h3>Tenant screening</h3><p>Thorough background and credit checks for reliable tenants.</p></div>
+        <div class="svc"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><h3>Rent collection</h3><p>On-time payments, clear statements and transparent reporting.</p></div>
+        <div class="svc"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 6l4 4M3 21l3-1 11-11-3-3L3 18z"/></svg></div><h3>Maintenance</h3><p>Fast, vetted repairs that keep tenants happy and value high.</p></div>
+        <div class="svc"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></div><h3>Marketing &amp; listings</h3><p>Professional photos and listings that fill vacancies faster.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROPERTIES -->
+  <section id="properties" class="properties">
+    <div class="wrap">
+      <div class="sec-head"><span class="eyebrow">Featured</span><h2>Available properties</h2><p>A selection of homes currently under our management.</p></div>
+      <div class="prop-grid" id="propGrid"></div>
+    </div>
+  </section>
+
+  <!-- MAP -->
+  <section id="map-sec">
+    <div class="wrap">
+      <div class="sec-head"><span class="eyebrow">Explore</span><h2>Find properties on the map</h2><p>Interactive map — click a marker to see the property and its price.</p></div>
+      <div id="map"></div>
+      <p class="map-note">Interactive map powered by Leaflet &amp; OpenStreetMap (free, no API key required).</p>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="wrap">
+      <div class="sec-head"><span class="eyebrow">Trusted by owners &amp; tenants</span><h2>What our clients say</h2></div>
+      <div class="tst-grid">
+        <div class="tst"><div class="stars">★★★★★</div><p>"Meridian took all the stress out of renting my flat. Reliable tenants, on-time rent, zero hassle."</p><div class="who"><span class="av">R</span><span><b>Robert M.</b><span>Property owner</span></span></div></div>
+        <div class="tst"><div class="stars">★★★★★</div><p>"The most responsive management company I've dealt with. Repairs are handled in days, not weeks."</p><div class="who"><span class="av">S</span><span><b>Sofia L.</b><span>Tenant</span></span></div></div>
+        <div class="tst"><div class="stars">★★★★★</div><p>"Professional from day one. Their listings filled my two vacancies within a fortnight."</p><div class="who"><span class="av">D</span><span><b>David K.</b><span>Portfolio owner</span></span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="wrap contact-grid">
+      <div>
+        <span class="eyebrow" style="color:var(--gold)">Get in touch</span>
+        <h2>Let's talk about your property.</h2>
+        <p class="lead">Tell us what you need — we'll get back to you within one business day.</p>
+        <div class="cinfo">
+          <a href="#"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16v3a2 2 0 0 1-2 2 18 18 0 0 1-16-16A2 2 0 0 1 6 3h3l2 5-2 1a12 12 0 0 0 5 5l1-2 5 2z"/></svg></span> +1 (555) 018-2200</a>
+          <a href="#"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span> hello@meridian-pm.com</a>
+          <div><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span> 24 Kingsway, City Centre</div>
+        </div>
+      </div>
+      <form onsubmit="event.preventDefault();this.querySelector('.ok').style.display='block';">
+        <div class="field"><label>Full name</label><input required placeholder="Your name"></div>
+        <div class="field"><label>Email</label><input type="email" required placeholder="you@email.com"></div>
+        <div class="field"><label>I am a…</label><select><option>Property owner</option><option>Prospective tenant</option><option>Investor</option></select></div>
+        <div class="field"><label>Message</label><textarea rows="3" placeholder="How can we help?"></textarea></div>
+        <button class="btn btn-navy" type="submit" style="width:100%;justify-content:center">Send enquiry</button>
+        <div class="ok">Thanks! Your enquiry was sent. (demo — this would email &amp; store the message.)</div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <a href="#" class="brand" style="color:#fff"><span class="mk">◆</span>Meridian</a>
+      <span>Property Management &amp; Real Estate</span>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Meridian Property Management. All rights reserved.</span>
+      <span>Trusted management. Premium listings.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  var props=[
+    {t:"The Ridgeview Apartment",loc:"Downtown",price:"$2,400/mo",bed:2,bath:2,area:"95 m²",lat:51.5122,lng:-0.1201},
+    {t:"Maple Court Family Home",loc:"Suburbs",price:"$3,800/mo",bed:4,bath:3,area:"180 m²",lat:51.5210,lng:-0.1000},
+    {t:"Harbor Loft Studio",loc:"Waterfront",price:"$1,600/mo",bed:1,bath:1,area:"55 m²",lat:51.5045,lng:-0.1290},
+    {t:"Elm Street Townhouse",loc:"City Centre",price:"$2,900/mo",bed:3,bath:2,area:"130 m²",lat:51.5175,lng:-0.1410},
+    {t:"Garden View Condo",loc:"Uptown",price:"$2,100/mo",bed:2,bath:1,area:"78 m²",lat:51.5260,lng:-0.1180},
+    {t:"Sunset Villa",loc:"Hillside",price:"$5,500/mo",bed:5,bath:4,area:"260 m²",lat:51.5090,lng:-0.1050}
+  ];
+  var bedI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 18v-6h18v6M3 12V7h6v5M15 12V7h6v5"/></svg>';
+  var bathI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4zM6 12V6a2 2 0 0 1 4 0"/></svg>';
+  var areaI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9V4h5M20 15v5h-5M4 4l6 6M20 20l-6-6"/></svg>';
+  var houseI='<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 22L24 8l18 14M10 20v18h28V20M20 38V28h8v10"/></svg>';
+  var grid=document.getElementById('propGrid');
+  props.forEach(function(p){
+    var el=document.createElement('div');el.className='prop';
+    el.innerHTML='<div class="img">'+houseI+'<span class="ph">Photo</span><span class="price">'+p.price+'</span></div>'+
+      '<div class="body"><div class="loc">'+p.loc+'</div><h3>'+p.t+'</h3>'+
+      '<div class="meta"><span>'+bedI+p.bed+' bed</span><span>'+bathI+p.bath+' bath</span><span>'+areaI+p.area+'</span></div></div>';
+    grid.appendChild(el);
+  });
+  // map
+  try{
+    var map=L.map('map').setView([51.514,-0.118],13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);
+    props.forEach(function(p){
+      L.marker([p.lat,p.lng]).addTo(map).bindPopup('<b>'+p.t+'</b><br>'+p.loc+' · '+p.price);
+    });
+  }catch(e){}
+</script>
+</body>
+</html>
