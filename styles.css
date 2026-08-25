@@ -558,3 +558,39 @@ a.cmethod:hover { transform: translateX(6px); border-color: rgba(43,107,158,0.45
 .faq-answer > div { overflow: hidden; }
 .faq-answer p { padding: 0 24px 22px; color: var(--ink-soft); font-size: 1rem; line-height: 1.65; }
 .faq-answer p b { color: var(--ink); }
+
+/* ======================================================================
+   Bandes défilantes (marquee) — décoratif, n'affecte pas la structure
+   ===================================================================== */
+.ribbon { position: relative; overflow: hidden; width: 100%;
+  padding: 16px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.ribbon-gold { background: linear-gradient(90deg, #e9b872, #d99f4e); }
+.ribbon-navy { background: linear-gradient(90deg, #0c2438, #123049); }
+.ribbon .track { display: inline-flex; flex-wrap: nowrap; white-space: nowrap; will-change: transform; }
+.ribbon-gold .track { animation: mq-left 32s linear infinite; }
+.ribbon-navy .track { animation: mq-right 32s linear infinite; }
+.ribbon .item { display: inline-flex; align-items: center; font-family: var(--display);
+  font-weight: 800; letter-spacing: .12em; font-size: 1.05rem; text-transform: uppercase; padding: 0 6px; }
+.ribbon-gold .item { color: #0a1f30; }
+.ribbon-navy .item { color: #eaf1f7; }
+.ribbon .sep { padding: 0 26px; color: currentColor; opacity: .55; font-size: 1rem; }
+.ribbon-gold .sep { color: #0a1f30; }
+.ribbon-navy .sep { color: var(--gold); opacity: 1; }
+@keyframes mq-left  { from { transform: translateX(0); }   to { transform: translateX(-50%); } }
+@keyframes mq-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+.ribbon:hover .track { animation-play-state: paused; }
+
+/* Bande verticale décorative (côté droit, bureau uniquement) */
+.vmarquee { position: fixed; top: 0; right: 0; height: 100vh; width: 34px; z-index: 40;
+  overflow: hidden; pointer-events: none; display: flex; justify-content: center;
+  background: linear-gradient(180deg, rgba(233,184,114,.10), rgba(10,31,48,.14)); border-left: 1px solid var(--line); }
+.vmarquee .vtrack { writing-mode: vertical-rl; white-space: nowrap; will-change: transform;
+  animation: mq-up 34s linear infinite; font-family: var(--display); font-weight: 700;
+  letter-spacing: .32em; font-size: .74rem; text-transform: uppercase; color: var(--gold); opacity: .6; }
+.vmarquee .vsep { padding: 22px 0; opacity: .5; }
+@keyframes mq-up { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+
+@media (max-width: 900px) { .vmarquee { display: none; } .ribbon .item { font-size: .92rem; } }
+@media (prefers-reduced-motion: reduce) {
+  .ribbon .track, .vmarquee .vtrack { animation: none; }
+}
