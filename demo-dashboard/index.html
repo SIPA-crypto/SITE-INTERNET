@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nimbus — Analytics Dashboard (Demo)</title>
+<meta name="robots" content="noindex" />
+<style>
+  @font-face{font-family:'Sora';src:url('../assets/fonts/sora.woff2') format('woff2');font-weight:100 800;font-display:swap}
+  @font-face{font-family:'Manrope';src:url('../assets/fonts/manrope.woff2') format('woff2');font-weight:200 800;font-display:swap}
+  :root{
+    --bg:#f6f7fb;--card:#ffffff;--ink:#161a2b;--soft:#6b7385;--faint:#9aa1b2;
+    --line:#e9ebf1;--accent:#5b5bd6;--accent-s:#eceafc;--accent2:#12b981;--warn:#f59e0b;--pink:#ec4899;--sky:#3b9be0;
+    --radius:16px;--sh:0 1px 2px rgba(20,26,43,.04),0 8px 24px rgba(20,26,43,.05);
+    --sans:'Manrope',system-ui,sans-serif;--disp:'Sora',system-ui,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:14px;-webkit-font-smoothing:antialiased}
+  .flag{background:#161a2b;color:#c7c5f5;text-align:center;font-size:12.5px;font-weight:600;padding:7px}
+  .app{display:grid;grid-template-columns:248px 1fr;min-height:100vh}
+  /* sidebar */
+  .side{background:var(--card);border-right:1px solid var(--line);padding:22px 16px;display:flex;flex-direction:column;gap:6px;position:sticky;top:0;height:100vh}
+  .logo{display:flex;align-items:center;gap:11px;padding:6px 10px 20px;font-family:var(--disp);font-weight:800;font-size:19px}
+  .logo .m{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#5b5bd6);display:grid;place-items:center;color:#fff}
+  .navlbl{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:14px 12px 6px}
+  .nav a{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:10px;color:var(--soft);font-weight:600;text-decoration:none}
+  .nav a svg{width:19px;height:19px}
+  .nav a:hover{background:var(--bg);color:var(--ink)}
+  .nav a.active{background:var(--accent-s);color:var(--accent)}
+  .side .up{margin-top:auto;background:linear-gradient(160deg,#5b5bd6,#4442b8);color:#fff;border-radius:14px;padding:16px}
+  .side .up h4{font-family:var(--disp);font-size:14px}.side .up p{font-size:12px;color:#d7d6f6;margin:4px 0 12px}
+  .side .up button{width:100%;background:#fff;color:#4442b8;border:0;padding:9px;border-radius:9px;font-weight:700;font-family:var(--sans);cursor:pointer}
+  /* main */
+  .main{padding:22px 26px 40px;min-width:0}
+  .top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+  .top h1{font-family:var(--disp);font-size:23px}.top .sub{color:var(--soft);font-size:13px;margin-top:2px}
+  .top-r{display:flex;align-items:center;gap:12px}
+  .search{position:relative}
+  .search input{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:9px 12px 9px 34px;font:inherit;width:200px}
+  .search input:focus{outline:none;border-color:var(--accent)}
+  .search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:15px;height:15px;color:var(--faint)}
+  .icon-btn{position:relative;width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;cursor:pointer;color:var(--soft)}
+  .icon-btn svg{width:19px;height:19px}
+  .icon-btn .dot{position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:var(--pink);border:2px solid var(--card)}
+  .avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#5b5bd6,#ec4899);color:#fff;display:grid;place-items:center;font-weight:700;font-family:var(--disp)}
+  .notif{position:absolute;right:0;top:48px;width:300px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--sh);padding:8px;z-index:50;display:none}
+  .notif.open{display:block}
+  .notif h4{font-size:13px;padding:8px 10px;color:var(--soft)}
+  .notif .item{display:flex;gap:10px;padding:10px;border-radius:10px}
+  .notif .item:hover{background:var(--bg)}
+  .notif .item .d{width:9px;height:9px;border-radius:50%;margin-top:4px;flex:0 0 auto}
+  .notif .item b{font-size:13px}.notif .item span{font-size:12px;color:var(--soft)}
+  /* kpi */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px}
+  @media(max-width:1050px){.kpis{grid-template-columns:repeat(2,1fr)}}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--sh)}
+  .kpi .h{display:flex;justify-content:space-between;align-items:center;color:var(--soft);font-size:12.5px;font-weight:600}
+  .kpi .ic{width:34px;height:34px;border-radius:9px;display:grid;place-items:center}
+  .kpi .ic svg{width:17px;height:17px}
+  .kpi .v{font-family:var(--disp);font-weight:800;font-size:27px;margin:10px 0 4px}
+  .kpi .delta{font-size:12.5px;font-weight:700;display:inline-flex;align-items:center;gap:4px}
+  .up-c{color:var(--accent2)}.down-c{color:var(--pink)}
+  .kpi .spark{margin-top:10px}
+  /* grid */
+  .row{display:grid;gap:16px;margin-bottom:16px}
+  .r1{grid-template-columns:1.7fr 1fr}
+  .r2{grid-template-columns:1fr 1fr}
+  @media(max-width:1050px){.r1,.r2{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--sh)}
+  .card .ch{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+  .card h3{font-family:var(--disp);font-size:16px}
+  .card .cs{font-size:12.5px;color:var(--soft)}
+  .tabs{display:flex;gap:4px;background:var(--bg);padding:3px;border-radius:9px}
+  .tabs button{border:0;background:none;padding:6px 12px;border-radius:7px;font:inherit;font-weight:600;font-size:12.5px;color:var(--soft);cursor:pointer}
+  .tabs button.on{background:var(--card);color:var(--accent);box-shadow:0 1px 3px rgba(0,0,0,.06)}
+  .bignum{font-family:var(--disp);font-weight:800;font-size:26px;margin:8px 0 2px}
+  /* legend */
+  .legend{display:flex;flex-direction:column;gap:12px}
+  .legend .li{display:flex;align-items:center;justify-content:space-between;font-size:13px}
+  .legend .li .lft{display:flex;align-items:center;gap:9px;color:var(--soft)}
+  .legend .li .sw{width:10px;height:10px;border-radius:3px}
+  .legend .li b{font-family:var(--disp)}
+  /* bars */
+  .bars{display:flex;align-items:flex-end;gap:14px;height:180px;padding-top:10px}
+  .bars .b{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;height:100%;justify-content:flex-end}
+  .bars .b .bar{width:60%;max-width:34px;border-radius:7px 7px 0 0;background:linear-gradient(180deg,#6366f1,#5b5bd6);transition:transform .15s;position:relative}
+  .bars .b:hover .bar{transform:scaleY(1.03);transform-origin:bottom;filter:brightness(1.08)}
+  .bars .b .bar .tip{position:absolute;top:-26px;left:50%;transform:translateX(-50%);background:#161a2b;color:#fff;font-size:11px;padding:3px 7px;border-radius:6px;opacity:0;white-space:nowrap;transition:.15s}
+  .bars .b:hover .bar .tip{opacity:1}
+  .bars .b .lb{font-size:11.5px;color:var(--faint);font-weight:600}
+  /* table */
+  table{width:100%;border-collapse:collapse}
+  th,td{text-align:left;padding:11px 8px;font-size:13px;border-bottom:1px solid var(--line);white-space:nowrap}
+  th{color:var(--faint);font-size:11px;text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+  td .cust{display:flex;align-items:center;gap:9px;font-weight:600}
+  td .ci{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:11px;font-weight:700;font-family:var(--disp)}
+  .badge{font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:20px}
+  .b-paid{background:#e7f7f0;color:#0f9d6b}.b-pend{background:#fef3e2;color:#b7791f}.b-fail{background:#fde8ef;color:#d6336c}
+  .tsearch{border:1px solid var(--line);border-radius:9px;padding:8px 11px;font:inherit;width:180px}
+  .tsearch:focus{outline:none;border-color:var(--accent)}
+  @media(max-width:760px){.app{grid-template-columns:1fr}.side{display:none}}
+  .fadein{animation:fade .5s ease both}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="flag">Sample analytics dashboard — designed &amp; built by Patrick Sipa · SIPA Tech Solutions (demo, sample data)</div>
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="side">
+    <div class="logo"><span class="m"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 18c3-8 13-8 16 0"/><circle cx="12" cy="7" r="2"/></svg></span>Nimbus</div>
+    <div class="navlbl">Menu</div>
+    <nav class="nav">
+      <a href="#" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>Dashboard</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>Analytics</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 11h5M18.5 8.5v5"/></svg>Customers</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-3"/><path d="M8 3v4h8V3"/></svg>Reports</a>
+    </nav>
+    <div class="navlbl">General</div>
+    <nav class="nav">
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>Settings</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>Log out</a>
+    </nav>
+    <div class="up"><h4>Go Pro</h4><p>Unlock advanced reports &amp; unlimited history.</p><button>Upgrade</button></div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="top">
+      <div><h1>Dashboard</h1><div class="sub">Welcome back, Patrick — here's your overview.</div></div>
+      <div class="top-r">
+        <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg><input placeholder="Search…"></div>
+        <div class="icon-btn" id="bell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="dot"></span>
+          <div class="notif" id="notif">
+            <h4>Notifications</h4>
+            <div class="item"><span class="d" style="background:#12b981"></span><div><b>New order #1043</b><span>Sofia placed a $240 order · 2m ago</span></div></div>
+            <div class="item"><span class="d" style="background:#5b5bd6"></span><div><b>Traffic spike</b><span>Visitors up 32% today · 1h ago</span></div></div>
+            <div class="item"><span class="d" style="background:#f59e0b"></span><div><b>Payment pending</b><span>Invoice #980 awaiting · 3h ago</span></div></div>
+          </div>
+        </div>
+        <div class="avatar">P</div>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpis">
+      <div class="kpi fadein"><div class="h">Revenue <span class="ic" style="background:#eceafc;color:#5b5bd6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span></div><div class="v">$48,260</div><div class="delta up-c">▲ 12.4% <span style="color:var(--faint);font-weight:600">vs last month</span></div><svg class="spark" width="100%" height="34" viewBox="0 0 200 34" preserveAspectRatio="none"><polyline points="0,26 25,22 50,24 75,16 100,18 125,10 150,13 175,6 200,8" fill="none" stroke="#5b5bd6" stroke-width="2.5"/></svg></div>
+      <div class="kpi fadein"><div class="h">Active Users <span class="ic" style="background:#e7f7f0;color:#12b981"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg></span></div><div class="v">8,942</div><div class="delta up-c">▲ 6.1% <span style="color:var(--faint);font-weight:600">vs last month</span></div><svg class="spark" width="100%" height="34" viewBox="0 0 200 34" preserveAspectRatio="none"><polyline points="0,20 25,22 50,14 75,18 100,12 125,15 150,9 175,11 200,7" fill="none" stroke="#12b981" stroke-width="2.5"/></svg></div>
+      <div class="kpi fadein"><div class="h">Orders <span class="ic" style="background:#e6f2fb;color:#3b9be0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M6 6L5 3H2"/></svg></span></div><div class="v">1,204</div><div class="delta up-c">▲ 3.8% <span style="color:var(--faint);font-weight:600">vs last month</span></div><svg class="spark" width="100%" height="34" viewBox="0 0 200 34" preserveAspectRatio="none"><polyline points="0,14 25,18 50,16 75,20 100,15 125,17 150,12 175,16 200,11" fill="none" stroke="#3b9be0" stroke-width="2.5"/></svg></div>
+      <div class="kpi fadein"><div class="h">Conversion <span class="ic" style="background:#fde8ef;color:#ec4899"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 7v5h-5"/></svg></span></div><div class="v">3.6%</div><div class="delta down-c">▼ 0.4% <span style="color:var(--faint);font-weight:600">vs last month</span></div><svg class="spark" width="100%" height="34" viewBox="0 0 200 34" preserveAspectRatio="none"><polyline points="0,10 25,12 50,9 75,14 100,13 125,17 150,15 175,19 200,18" fill="none" stroke="#ec4899" stroke-width="2.5"/></svg></div>
+    </div>
+
+    <!-- ROW 1: area chart + donut -->
+    <div class="row r1">
+      <div class="card">
+        <div class="ch"><div><h3>Revenue overview</h3><div class="cs" id="rangeLbl">Last 30 days</div></div>
+          <div class="tabs"><button data-r="7">7d</button><button class="on" data-r="30">30d</button><button data-r="90">90d</button></div>
+        </div>
+        <div class="bignum" id="revTotal">$48,260</div>
+        <svg width="100%" height="220" viewBox="0 0 700 220" preserveAspectRatio="none" id="areaSvg">
+          <defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5b5bd6" stop-opacity=".28"/><stop offset="1" stop-color="#5b5bd6" stop-opacity="0"/></linearGradient></defs>
+          <line x1="0" y1="55" x2="700" y2="55" stroke="#eef0f5"/><line x1="0" y1="110" x2="700" y2="110" stroke="#eef0f5"/><line x1="0" y1="165" x2="700" y2="165" stroke="#eef0f5"/>
+          <path id="areaFill" fill="url(#ag)" d=""/>
+          <path id="areaLine" fill="none" stroke="#5b5bd6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d=""/>
+        </svg>
+      </div>
+      <div class="card">
+        <div class="ch"><h3>Traffic sources</h3></div>
+        <div style="display:flex;justify-content:center;margin:6px 0 16px">
+          <svg width="168" height="168" viewBox="0 0 42 42">
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#eef0f5" stroke-width="6"/>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#5b5bd6" stroke-width="6" stroke-dasharray="46 54" stroke-dashoffset="25"/>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#12b981" stroke-width="6" stroke-dasharray="27 73" stroke-dashoffset="-21"/>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#f59e0b" stroke-width="6" stroke-dasharray="17 83" stroke-dashoffset="-48"/>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#ec4899" stroke-width="6" stroke-dasharray="10 90" stroke-dashoffset="-65"/>
+            <text x="21" y="20.5" text-anchor="middle" font-size="6" font-weight="700" font-family="Sora" fill="#161a2b">8,942</text>
+            <text x="21" y="26" text-anchor="middle" font-size="2.6" fill="#9aa1b2">visits</text>
+          </svg>
+        </div>
+        <div class="legend">
+          <div class="li"><span class="lft"><span class="sw" style="background:#5b5bd6"></span>Organic search</span><b>46%</b></div>
+          <div class="li"><span class="lft"><span class="sw" style="background:#12b981"></span>Direct</span><b>27%</b></div>
+          <div class="li"><span class="lft"><span class="sw" style="background:#f59e0b"></span>Social</span><b>17%</b></div>
+          <div class="li"><span class="lft"><span class="sw" style="background:#ec4899"></span>Referral</span><b>10%</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROW 2: bars + table -->
+    <div class="row r2">
+      <div class="card">
+        <div class="ch"><div><h3>Sales by category</h3><div class="cs">This quarter</div></div></div>
+        <div class="bars">
+          <div class="b"><div class="bar" style="height:62%"><span class="tip">$12.4k</span></div><span class="lb">Tech</span></div>
+          <div class="b"><div class="bar" style="height:84%"><span class="tip">$16.8k</span></div><span class="lb">Home</span></div>
+          <div class="b"><div class="bar" style="height:48%"><span class="tip">$9.6k</span></div><span class="lb">Sport</span></div>
+          <div class="b"><div class="bar" style="height:71%"><span class="tip">$14.2k</span></div><span class="lb">Fashion</span></div>
+          <div class="b"><div class="bar" style="height:38%"><span class="tip">$7.5k</span></div><span class="lb">Books</span></div>
+          <div class="b"><div class="bar" style="height:55%"><span class="tip">$11.0k</span></div><span class="lb">Toys</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ch"><h3>Recent orders</h3><input class="tsearch" id="tsearch" placeholder="Filter customer…"></div>
+        <div style="overflow-x:auto">
+        <table><thead><tr><th>Customer</th><th>Amount</th><th>Status</th></tr></thead><tbody id="tbody"></tbody></table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  // area chart data (y values 0-100, higher = more)
+  var data={
+    7:[40,55,48,62,58,72,80],
+    30:[30,42,38,55,48,60,52,66,70,64,72,78,74,82,80,86],
+    90:[20,28,34,30,42,38,48,44,54,60,56,64,70,66,74,78,82,88,84,92]
+  };
+  var totals={7:"$11,940",30:"$48,260",90:"$142,880"};
+  var W=700,H=220;
+  function build(vals){
+    var n=vals.length, step=W/(n-1);
+    var pts=vals.map(function(v,i){return [i*step, H-14-(v/100)*(H-40)];});
+    var line=pts.map(function(p,i){return (i?"L":"M")+p[0].toFixed(1)+","+p[1].toFixed(1);}).join(" ");
+    var fill=line+" L"+W+","+H+" L0,"+H+" Z";
+    document.getElementById('areaLine').setAttribute('d',line);
+    document.getElementById('areaFill').setAttribute('d',fill);
+  }
+  build(data[30]);
+  document.querySelectorAll('.tabs button').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('.tabs button').forEach(function(x){x.classList.remove('on')});
+      b.classList.add('on');var r=b.dataset.r;
+      build(data[r]);
+      document.getElementById('revTotal').textContent=totals[r];
+      document.getElementById('rangeLbl').textContent="Last "+r+" days";
+    });
+  });
+  // notifications
+  var bell=document.getElementById('bell'),notif=document.getElementById('notif');
+  bell.addEventListener('click',function(e){e.stopPropagation();notif.classList.toggle('open');});
+  document.addEventListener('click',function(){notif.classList.remove('open');});
+  notif.addEventListener('click',function(e){e.stopPropagation();});
+  // table
+  var orders=[
+    {n:"Sofia Lindqvist",a:"$240.00",s:"paid",c:"#5b5bd6"},
+    {n:"Marcus Bennett",a:"$1,120.00",s:"paid",c:"#12b981"},
+    {n:"Aisha Rahman",a:"$78.50",s:"pending",c:"#f59e0b"},
+    {n:"David Owusu",a:"$540.00",s:"paid",c:"#3b9be0"},
+    {n:"Elena Rossi",a:"$310.00",s:"failed",c:"#ec4899"},
+    {n:"Kenji Tanaka",a:"$95.00",s:"pending",c:"#6366f1"}
+  ];
+  var badge={paid:['b-paid','Paid'],pending:['b-pend','Pending'],failed:['b-fail','Failed']};
+  function initials(n){return n.split(' ').map(function(w){return w[0]}).slice(0,2).join('');}
+  function renderT(q){
+    var tb=document.getElementById('tbody');tb.innerHTML='';
+    orders.filter(function(o){return !q||o.n.toLowerCase().includes(q)}).forEach(function(o){
+      var tr=document.createElement('tr');
+      tr.innerHTML='<td><div class="cust"><span class="ci" style="background:'+o.c+'">'+initials(o.n)+'</span>'+o.n+'</div></td>'+
+        '<td style="font-weight:700;font-family:Sora">'+o.a+'</td>'+
+        '<td><span class="badge '+badge[o.s][0]+'">'+badge[o.s][1]+'</span></td>';
+      tb.appendChild(tr);
+    });
+  }
+  renderT('');
+  document.getElementById('tsearch').addEventListener('input',function(){renderT(this.value.trim().toLowerCase());});
+</script>
+</body>
+</html>
